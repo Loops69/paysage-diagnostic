@@ -3,262 +3,561 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Diagnostic paysagiste — combien vous coûtent vos devis non signés</title>
-<meta name="description" content="6 questions, un chiffre. Découvrez ce que vos devis non relancés et vos appels manqués coûtent réellement à votre entreprise de paysage.">
+<title>Ce que vos devis non relancés vous coûtent — diagnostic paysagiste</title>
+<meta name="description" content="4 chiffres, 6 questions, 40 secondes. Découvrez ce que vos devis non signés et vos appels manqués coûtent chaque année à votre entreprise du paysage.">
+<meta property="og:title" content="Ce que vos devis non relancés vous coûtent">
+<meta property="og:description" content="40 secondes pour connaître votre chiffre.">
+<meta property="og:type" content="website">
 <style>
   :root{
-    --bleu:#4F7CFF; --bleu-fonce:#3A61D9; --encre:#0B1220; --gris:#5B6478;
-    --gris-clair:#F4F6FB; --bord:#E3E8F4; --vert:#1B9E6B; --orange:#E8734A;
-    --rayon:16px;
+    --bleu:#4F7CFF; --bleu-fonce:#3A61D9; --bleu-pale:#EEF3FF; --bleu-bord:#D6E0FF;
+    --encre:#0B1220; --encre-doux:#1E293B; --gris:#5B6478; --gris-2:#8A93A6;
+    --fond:#FFFFFF; --fond-2:#F7F9FD; --bord:#E5EAF3;
+    --or:#E8734A; --or-pale:#FFF4EF; --vert:#12A05C; --vert-pale:#EAF7F1;
+    --r:16px; --r-s:11px;
+    --ombre:0 1px 2px rgba(11,18,32,.04), 0 8px 24px rgba(11,18,32,.06);
+    --ombre-fort:0 2px 4px rgba(11,18,32,.04), 0 18px 48px rgba(11,18,32,.10);
   }
-  *{box-sizing:border-box;}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
   body{
-    margin:0;background:#fff;color:var(--encre);
+    background:var(--fond);color:var(--encre);
     font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
-    line-height:1.6;-webkit-font-smoothing:antialiased;
+    font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
   }
-  .enveloppe{max-width:760px;margin:0 auto;padding:0 22px;}
-  header{padding:54px 0 28px;border-bottom:1px solid var(--bord);}
-  .marque{display:flex;align-items:center;gap:10px;margin-bottom:26px;}
-  .point{width:11px;height:11px;border-radius:50%;background:var(--bleu);flex:0 0 auto;}
-  .marque span{font-weight:800;letter-spacing:-.02em;font-size:17px;}
-  h1{font-size:clamp(28px,5.4vw,44px);line-height:1.14;letter-spacing:-.03em;margin:0 0 18px;font-weight:800;}
-  h1 em{font-style:normal;color:var(--bleu);}
-  .chapeau{font-size:17px;color:var(--gris);margin:0 0 8px;max-width:600px;}
-  main{padding:34px 0 70px;}
-  h2{font-size:22px;letter-spacing:-.02em;margin:0 0 14px;font-weight:800;}
-  h3{font-size:17px;margin:0 0 10px;font-weight:700;}
-  p{margin:0 0 14px;}
-  .chiffre-grand{font-size:clamp(38px,9vw,62px);font-weight:800;letter-spacing:-.04em;line-height:1;margin:0;}
-  .bleu{color:var(--bleu);} .rouge{color:var(--orange);} .vert{color:var(--vert);}
-  .carte{background:var(--gris-clair);border:1px solid var(--bord);border-radius:var(--rayon);padding:24px;margin:0 0 18px;}
-  .carte-blanche{background:#fff;border:1px solid var(--bord);border-radius:var(--rayon);padding:24px;margin:0 0 18px;}
-  .note{font-size:13.5px;color:var(--gris);}
-  .js-only{display:block;}
-  .nojs .js-only{display:none;}
-  .nojs .non-js{display:block;}
-  .non-js{display:none;}
+  .enveloppe{max-width:820px;margin:0 auto;padding:0 24px}
 
-  /* --- questions --- */
-  .question{margin:0 0 26px;}
-  .question label{display:block;font-weight:700;margin-bottom:6px;font-size:16px;}
-  .question .aide{font-size:14px;color:var(--gris);margin:0 0 12px;}
-  .glissiere{display:flex;align-items:center;gap:14px;}
-  input[type=range]{flex:1;accent-color:var(--bleu);height:26px;}
-  .valeur{min-width:112px;text-align:right;font-weight:800;font-size:18px;font-variant-numeric:tabular-nums;}
-  .choix{display:flex;flex-direction:column;gap:8px;}
-  .choix button{
-    text-align:left;background:#fff;border:1.5px solid var(--bord);border-radius:12px;
-    padding:13px 16px;font:inherit;font-size:15px;cursor:pointer;transition:.15s;
-  }
-  .choix button:hover{border-color:var(--bleu);}
-  .choix button.actif{border-color:var(--bleu);background:#EEF3FF;font-weight:700;}
-  .barre{position:fixed;left:0;right:0;bottom:0;background:rgba(255,255,255,.94);
-    backdrop-filter:blur(8px);border-top:1px solid var(--bord);padding:14px 22px;
-    display:flex;justify-content:center;gap:14px;z-index:20;}
-  .bouton{
-    background:var(--bleu);color:#fff;border:0;border-radius:12px;padding:15px 30px;
-    font:inherit;font-weight:800;font-size:16px;cursor:pointer;transition:.15s;
-  }
-  .bouton:hover{background:var(--bleu-fonce);}
-  .bouton:disabled{background:#C3CDE2;cursor:not-allowed;}
-  .bouton-clair{background:#fff;color:var(--encre);border:1.5px solid var(--bord);}
-  .bouton-clair:hover{background:var(--gris-clair);}
-  .barre{display:none;}
-  .barre.visible{display:flex;}
-  .ligne-resultat{display:flex;justify-content:space-between;align-items:baseline;
-    padding:13px 0;border-bottom:1px solid var(--bord);gap:16px;}
-  .ligne-resultat:last-child{border-bottom:0;}
-  .ligne-resultat .libelle{font-size:15px;color:var(--gris);}
-  .ligne-resultat .montant{font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;white-space:nowrap;}
-  .verdict{border-left:4px solid var(--bleu);padding:4px 0 4px 18px;margin:0 0 22px;}
-  .verdict h3{margin:0 0 6px;font-size:19px;}
-  .pied{border-top:1px solid var(--bord);padding:26px 0 40px;font-size:13.5px;color:var(--gris);}
-  .pied a{color:var(--gris);}
-  .formulaire{display:flex;gap:10px;flex-wrap:wrap;margin:6px 0 10px;}
-  .formulaire input{flex:1;min-width:220px;padding:14px 16px;border:1.5px solid var(--bord);
-    border-radius:12px;font:inherit;font-size:15px;}
-  .formulaire input:focus{outline:0;border-color:var(--bleu);}
-  ul.simple{padding-left:20px;margin:0 0 14px;}
-  ul.simple li{margin-bottom:7px;}
-  .etape{border-left:2px solid var(--bord);padding-left:16px;margin:0 0 14px;}
-  .etape strong{color:var(--bleu);}
-  @media(max-width:560px){
-    .valeur{min-width:88px;font-size:16px;}
-    .ligne-resultat{flex-direction:column;gap:2px;}
-    .ligne-resultat .montant{font-size:22px;}
+  .entete{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);
+    backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--bord)}
+  .entete-in{max-width:820px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:10px}
+  .point{width:10px;height:10px;border-radius:50%;background:var(--bleu);
+    box-shadow:0 0 0 4px var(--bleu-pale);flex:0 0 auto}
+  .marque-nom{font-weight:800;letter-spacing:-.02em;font-size:15px}
+  .marque-droite{margin-left:auto;font-size:13px;color:var(--gris-2);font-weight:600}
+
+  .hero{padding:74px 0 54px;position:relative;overflow:hidden}
+  .hero:before{content:"";position:absolute;inset:-40% 30% auto -20%;height:520px;
+    background:radial-gradient(ellipse at center, rgba(79,124,255,.10), transparent 68%);
+    pointer-events:none}
+  .etiquette{display:inline-flex;align-items:center;gap:8px;background:var(--bleu-pale);
+    border:1px solid var(--bleu-bord);color:var(--bleu-fonce);border-radius:100px;
+    padding:7px 15px;font-size:13px;font-weight:700;letter-spacing:.01em;margin-bottom:26px}
+  h1{font-size:clamp(32px,6.2vw,52px);line-height:1.08;letter-spacing:-.035em;
+    font-weight:800;margin-bottom:22px;max-width:15ch}
+  h1 em{font-style:normal;color:var(--bleu)}
+  .chapeau{font-size:clamp(17px,2.3vw,19.5px);color:var(--gris);max-width:56ch;margin-bottom:34px}
+  .rangee-boutons{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+  .bouton{background:var(--bleu);color:#fff;border:0;border-radius:var(--r-s);
+    padding:16px 30px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;
+    transition:transform .12s ease, background .15s ease, box-shadow .15s ease;
+    box-shadow:0 6px 18px rgba(79,124,255,.30);white-space:nowrap}
+  .bouton:hover{background:var(--bleu-fonce);transform:translateY(-1px);
+    box-shadow:0 10px 26px rgba(79,124,255,.36)}
+  .bouton:active{transform:translateY(0)}
+  .bouton[disabled]{background:#C3CDE2;box-shadow:none;cursor:not-allowed;transform:none}
+  .bouton-clair{background:#fff;color:var(--encre);border:1.5px solid var(--bord);box-shadow:none}
+  .bouton-clair:hover{background:var(--fond-2);border-color:#CFD8E8;box-shadow:none}
+  .bouton-lien{background:none;border:0;color:var(--gris);font:inherit;font-size:14px;
+    font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:8px 0}
+  .bouton-lien:hover{color:var(--bleu)}
+
+  .carte{background:#fff;border:1px solid var(--bord);border-radius:var(--r);padding:26px;
+    box-shadow:var(--ombre)}
+  .carte-2{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);padding:26px}
+
+  .pre-rempli{display:flex;gap:14px;align-items:flex-start;background:var(--bleu-pale);
+    border:1px solid var(--bleu-bord);border-radius:var(--r);padding:18px 20px;margin-bottom:26px}
+  #zone-pre-rempli-hero .pre-rempli{margin:0 0 30px;max-width:60ch}
+  .pre-rempli .icone{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--bleu);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;
+    font-weight:800;margin-top:1px}
+  .pre-rempli p{font-size:14.5px;color:var(--encre-doux);margin:0}
+  .pre-rempli strong{color:var(--encre)}
+
+  .preuves{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:16px;margin:44px 0 0}
+  .preuve{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);padding:22px}
+  .preuve .gros{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1;
+    color:var(--bleu);margin-bottom:8px;font-variant-numeric:tabular-nums}
+  .preuve .dit{font-size:14px;color:var(--gris);line-height:1.5}
+  .preuve .src{font-size:11.5px;color:var(--gris-2);margin-top:9px;font-weight:600}
+
+  section{padding:64px 0}
+  .sep{height:1px;background:var(--bord);margin:0}
+  h2{font-size:clamp(24px,3.6vw,33px);line-height:1.16;letter-spacing:-.028em;
+    font-weight:800;margin-bottom:16px}
+  h3{font-size:19px;letter-spacing:-.02em;font-weight:800;margin-bottom:12px}
+  h4{font-size:16px;font-weight:800;margin-bottom:8px}
+  .intro-section{font-size:17.5px;color:var(--gris);max-width:60ch;margin-bottom:34px}
+  p+p{margin-top:14px}
+
+  .dossier{background:#fff;border:1px solid var(--bord);border-radius:var(--r);
+    overflow:hidden;box-shadow:var(--ombre-fort);margin:30px 0}
+  .dossier-tete{background:var(--encre);color:#fff;padding:20px 26px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .dossier-tete .ref{font-weight:800;letter-spacing:-.01em;font-size:16px}
+  .dossier-tete .montant{font-weight:800;font-size:22px;letter-spacing:-.02em;
+    color:#fff;font-variant-numeric:tabular-nums}
+  .dossier-tete .sous{font-size:12.5px;color:#94A3B8;font-weight:600;display:block;margin-top:2px;
+    letter-spacing:.02em;text-transform:uppercase}
+  .trace{padding:8px 26px 22px}
+  .etape{display:grid;grid-template-columns:96px 26px 1fr;gap:0;position:relative;padding:15px 0}
+  .etape .date{font-size:13px;font-weight:800;color:var(--gris);padding-top:1px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .etape .rail{position:relative;display:flex;justify-content:center}
+  .etape .rail:before{content:"";position:absolute;top:22px;bottom:-15px;width:2px;background:var(--bord)}
+  .etape:last-child .rail:before{display:none}
+  .etape .puce{width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid var(--bord);
+    display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;
+    z-index:1;flex:0 0 auto}
+  .etape.fait .puce{background:var(--vert-pale);border-color:var(--vert);color:var(--vert);font-weight:800}
+  .etape.cle .puce{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:800}
+  .etape.attente .puce{background:var(--or-pale);border-color:var(--or);color:var(--or);font-weight:800}
+  .etape .quoi{font-size:15px;font-weight:700;color:var(--encre);line-height:1.45}
+  .etape .detail{font-size:13.5px;color:var(--gris);margin-top:3px;line-height:1.5}
+  .etape.cle .quoi{color:var(--bleu-fonce)}
+  .dossier-pied{background:var(--fond-2);border-top:1px solid var(--bord);padding:20px 26px;
+    font-size:14.5px;color:var(--encre-doux)}
+  .dossier-pied strong{color:var(--encre)}
+
+  .bloc-question{margin-bottom:34px}
+  .bloc-question .intitule{font-weight:700;font-size:16.5px;margin-bottom:5px;
+    display:flex;align-items:baseline;gap:9px}
+  .bloc-question .num{font-size:12.5px;font-weight:800;color:var(--bleu);
+    background:var(--bleu-pale);border-radius:6px;padding:2px 8px;flex:0 0 auto}
+  .bloc-question .aide{font-size:14px;color:var(--gris);margin-bottom:14px}
+  .glissiere{display:flex;align-items:center;gap:16px}
+  input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;
+    background:var(--bord);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;
+    border-radius:50%;background:var(--bleu);border:3px solid #fff;
+    box-shadow:0 2px 8px rgba(79,124,255,.4);cursor:grab;transition:transform .12s}
+  input[type=range]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.12)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;
+    background:var(--bleu);border:3px solid #fff;box-shadow:0 2px 8px rgba(79,124,255,.4);cursor:grab}
+  .valeur{min-width:132px;text-align:right;font-weight:800;font-size:19px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--encre)}
+
+  .choix{display:flex;flex-direction:column;gap:9px}
+  .choix button{text-align:left;background:#fff;border:1.5px solid var(--bord);
+    border-radius:var(--r-s);padding:15px 18px;font:inherit;font-size:15px;cursor:pointer;
+    transition:.14s;display:flex;align-items:flex-start;gap:12px;line-height:1.45}
+  .choix button:hover{border-color:var(--bleu);background:var(--bleu-pale)}
+  .choix button .case{flex:0 0 auto;width:19px;height:19px;border-radius:50%;
+    border:2px solid var(--bord);margin-top:1px;transition:.14s}
+  .choix button.actif{border-color:var(--bleu);background:var(--bleu-pale);font-weight:700;
+    box-shadow:0 0 0 3px rgba(79,124,255,.10)}
+  .choix button.actif .case{border-color:var(--bleu);background:var(--bleu);
+    box-shadow:inset 0 0 0 4px #fff}
+
+  .barre{position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(14px);
+    border-top:1px solid var(--bord);padding:14px 24px;display:none;
+    box-shadow:0 -6px 24px rgba(11,18,32,.05)}
+  .barre.visible{display:block}
+  .barre-in{max-width:820px;margin:0 auto;display:flex;align-items:center;gap:18px}
+  .progres{flex:1;height:5px;background:var(--bord);border-radius:6px;overflow:hidden}
+  .progres span{display:block;height:100%;width:0;background:var(--bleu);
+    border-radius:6px;transition:width .3s ease}
+  .barre .compte{font-size:13px;font-weight:700;color:var(--gris);
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  .verdict{border-radius:var(--r);padding:30px;margin-bottom:34px;border:1px solid var(--bord);
+    background:var(--fond-2);position:relative;overflow:hidden}
+  .verdict:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--bleu)}
+  .verdict.v-or:before{background:var(--or)} .verdict.v-vert:before{background:var(--vert)}
+  .verdict .tete{font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--gris-2);margin-bottom:8px}
+  .verdict h3{font-size:clamp(22px,3.4vw,29px);letter-spacing:-.03em;margin-bottom:10px}
+  .verdict p{color:var(--encre-doux);font-size:16.5px;max-width:54ch}
+
+  .montants{background:#fff;border:1px solid var(--bord);border-radius:var(--r);
+    overflow:hidden;box-shadow:var(--ombre);margin-bottom:14px}
+  .ligne{display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:22px 26px;border-bottom:1px solid var(--bord)}
+  .ligne:last-child{border-bottom:0}
+  .ligne .gauche{display:flex;flex-direction:column;gap:3px}
+  .ligne .libelle{font-size:15.5px;font-weight:700;color:var(--encre)}
+  .ligne .explication{font-size:13.5px;color:var(--gris)}
+  .ligne .chiffre{font-weight:800;font-size:27px;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ligne.principal{background:var(--or-pale)}
+  .chiffre.or{color:var(--or)} .chiffre.bleu{color:var(--bleu)} .chiffre.neutre{color:var(--gris)}
+
+  .avert{font-size:13.5px;color:var(--gris);line-height:1.55}
+
+  .hypotheses{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);
+    padding:24px 26px;margin-top:6px}
+  .hypotheses ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .hypotheses li{font-size:14.5px;color:var(--encre-doux);padding-left:22px;position:relative}
+  .hypotheses li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;
+    border-radius:50%;background:var(--bleu)}
+  .hypotheses li strong{font-weight:800;color:var(--encre)}
+
+  .capture{background:var(--encre);border-radius:var(--r);padding:34px;color:#fff}
+  .capture h3{color:#fff;font-size:22px;margin-bottom:10px}
+  .capture .sous{color:#94A3B8;font-size:15.5px;margin-bottom:22px;max-width:50ch}
+  .champs{display:flex;gap:10px;flex-wrap:wrap}
+  .champs input{flex:1;min-width:230px;padding:16px 18px;border-radius:var(--r-s);
+    border:1.5px solid #334155;background:#1E293B;color:#fff;font:inherit;font-size:15.5px}
+  .champs input::placeholder{color:#64748B}
+  .champs input:focus{outline:0;border-color:var(--bleu);background:#0F172A}
+  .accuse{margin-top:16px;font-size:14.5px;color:#94A3B8}
+  .accuse.ok{color:#4ADE80;font-weight:600}
+  .accuse.ko{color:#FCA5A5}
+
+  footer{border-top:1px solid var(--bord);padding:38px 0 56px;background:var(--fond-2)}
+  footer p{font-size:13.5px;color:var(--gris-2);max-width:66ch}
+  footer p+p{margin-top:9px}
+  footer strong{color:var(--gris)}
+
+  .non-js{display:none}
+  .nojs .js-only{display:none}
+  .nojs .non-js{display:block}
+
+  @media(max-width:640px){
+    .hero{padding:52px 0 40px}
+    section{padding:48px 0}
+    .carte,.carte-2,.verdict{padding:22px}
+    .ligne{padding:18px 20px;flex-direction:column;align-items:flex-start;gap:8px}
+    .ligne .chiffre{font-size:32px}
+    .valeur{min-width:96px;font-size:17px}
+    .etape{grid-template-columns:74px 24px 1fr}
+    .etape .date{font-size:12px}
+    .trace{padding:4px 18px 18px}
+    .dossier-tete{padding:16px 20px}
+    .dossier-pied{padding:16px 20px}
+    .barre-in{gap:12px}
+    .capture{padding:24px}
   }
 </style>
 </head>
 <body>
-<header>
-  <div class="enveloppe">
-    <div class="marque"><span class="point"></span><span>Diagnostic paysagiste</span></div>
-    <h1>Vos devis non signés vous coûtent <em>plus cher que vous ne croyez</em>.</h1>
-    <p class="chapeau">6 questions. 40 secondes. Vous repartez avec votre chiffre — et la liste de ce qui fuit.</p>
-  </div>
-</header>
+<div class="entete"><div class="entete-in">
+  <span class="point"></span><span class="marque-nom">Diagnostic paysage</span>
+  <span class="marque-droite">6 questions · 40 secondes</span>
+</div></div>
 
-<main class="enveloppe">
-
-  <div class="non-js">
-    <div class="carte">
-      <h2>Le diagnostic nécessite JavaScript</h2>
-      <p>Ce navigateur ne l'exécute pas ou il est désactivé. Voici ce que le diagnostic mesure, et vous pouvez nous écrire directement.</p>
-    </div>
-  </div>
-
-  <div id="intro" class="js-only">
-    <div class="carte-blanche">
-      <h3>Ce que ça calcule</h3>
-      <p>Dans le bâtiment, <strong>1 devis sur 4 seulement</strong> se transforme en chantier. Les 3 autres ne sont, le plus souvent, <strong>jamais relancés</strong>.</p>
-      <p style="margin-bottom:0">Et pendant que vous êtes sur un chantier, le téléphone sonne : <strong>plus de la moitié des appelants ne rappellent jamais</strong>.</p>
-    </div>
-    <div class="carte-blanche">
-      <h3>Ce que ça ne fait pas</h3>
-      <p style="margin-bottom:0">Aucun discours commercial. Les taux utilisés sont ceux du secteur, et vous les voyez à la fin. Si votre résultat est bon, on vous le dira.</p>
-    </div>
-    <button class="bouton" onclick="demarrer()">Commencer le diagnostic</button>
+<div class="hero"><div class="enveloppe">
+  <div class="etiquette">Pour les entreprises du paysage</div>
+  <h1>1 devis sur 4 se signe.<br><em>Les 3 autres dorment.</em></h1>
+  <p class="chapeau">Ce n'est pas un problème de travail. C'est qu'entre un devis envoyé et un
+  chantier signé, il ne se passe rien — et personne n'a le temps de s'en occuper.</p>
+  <div id="zone-pre-rempli-hero"></div>
+  <div class="rangee-boutons">
+    <button class="bouton" onclick="demarrer()">Voir mon chiffre</button>
+    <button class="bouton-lien" onclick="versTrace()">Voir un dossier suivi de bout en bout</button>
   </div>
 
-  <div id="quiz" class="js-only" style="display:none">
-    <h2>Votre activité</h2>
+  <div class="preuves">
+    <div class="preuve">
+      <div class="gros">22–28 %</div>
+      <div class="dit">de devis signés dans le bâtiment. Le reste n'est presque jamais relancé.</div>
+      <div class="src">mesuré sur 15 000 devis réels</div>
+    </div>
+    <div class="preuve">
+      <div class="gros">62 %</div>
+      <div class="dit">des personnes qui n'ont pas eu de réponse ne rappellent jamais. Elles appellent le suivant.</div>
+      <div class="src">études du secteur télécom</div>
+    </div>
+    <div class="preuve">
+      <div class="gros">15 %</div>
+      <div class="dit">des foyers français font appel à un professionnel du jardin. Alors que 74 % ont un jardin.</div>
+      <div class="src">VALHOR / FranceAgriMer, 2025</div>
+    </div>
+  </div>
+</div></div>
 
-    <div class="question">
-      <label for="devis">Devis envoyés par mois</label>
-      <p class="aide">Toutes demandes confondues : entretien, création, élagage.</p>
-      <div class="glissiere">
-        <input type="range" id="devis" min="1" max="40" value="10" oninput="maj('devis','v_devis','/mois')">
-        <div class="valeur" id="v_devis">10 /mois</div>
+<div class="enveloppe">
+  <div class="non-js" style="padding:40px 0">
+    <div class="carte-2">
+      <h3>Le diagnostic a besoin de JavaScript</h3>
+      <p style="color:var(--gris);font-size:15px">Votre navigateur ne l'exécute pas, ou il est
+      désactivé. Vous pouvez néanmoins nous écrire : nous vous envoyons le calcul à la main.</p>
+    </div>
+  </div>
+</div>
+
+<section id="trace" class="js-only"><div class="enveloppe">
+  <h2>Un dossier, du premier jour à la signature</h2>
+  <p class="intro-section">Voilà ce qu'un dossier donne quand rien ne dort. C'est un
+  <strong>cas illustratif</strong> — les montants et les dates sont un exemple, pas un résultat promis.</p>
+
+  <div class="dossier">
+    <div class="dossier-tete">
+      <div>
+        <div class="ref">Dossier n° 2026-0412</div>
+        <span class="sous">Création d'un jardin · particuliers</span>
+      </div>
+      <div style="text-align:right">
+        <div class="montant">4 200 €</div>
+        <span class="sous">Montant du devis</span>
       </div>
     </div>
 
-    <div class="question">
-      <label for="panier">Montant moyen d'un chantier</label>
-      <p class="aide">Le panier moyen de vos devis signés, en euros.</p>
+    <div class="trace">
+      <div class="etape fait">
+        <div class="date">mar. 14 avr.</div>
+        <div class="rail"><div class="puce">✓</div></div>
+        <div>
+          <div class="quoi">Devis envoyé</div>
+          <div class="detail">Visite faite, chiffrage parti le jour même. Horodaté — c'est cette date qui fait courir tous les délais.</div>
+        </div>
+      </div>
+      <div class="etape clé">
+        <div class="date">jeu. 16 avr.</div>
+        <div class="rail"><div class="puce">1</div></div>
+        <div>
+          <div class="quoi">Première relance, automatique</div>
+          <div class="detail">Deux jours après l'envoi, la relance part seule. Ni un rappel sec, ni un reproche : une question sur le démarrage des travaux.</div>
+        </div>
+      </div>
+      <div class="etape fait">
+        <div class="date">ven. 17 avr.</div>
+        <div class="rail"><div class="puce">✓</div></div>
+        <div>
+          <div class="quoi">Le client répond</div>
+          <div class="detail">Il hésite sur le choix des essences. Sans la relance, cette question serait restée dans sa tête — et le devis avec.</div>
+        </div>
+      </div>
+      <div class="etape clé">
+        <div class="date">lun. 20 avr.</div>
+        <div class="rail"><div class="puce">2</div></div>
+        <div>
+          <div class="quoi">Devis révisé, renvoyé</div>
+          <div class="detail">Le chiffrage ajusté repart le jour même, et la relance reprogrammée. Rien à y penser, rien à oublier.</div>
+        </div>
+      </div>
+      <div class="etape fait">
+        <div class="date">jeu. 24 avr.</div>
+        <div class="rail"><div class="puce">✓</div></div>
+        <div>
+          <div class="quoi">Devis signé</div>
+          <div class="detail">Dix jours après la visite. Le chantier est planifié, et le contrat d'entretien annuel proposé dans la foulée.</div>
+        </div>
+      </div>
+      <div class="etape attente">
+        <div class="date">chaque année</div>
+        <div class="rail"><div class="puce">∞</div></div>
+        <div>
+          <div class="quoi">Le contrat d'entretien prend le relais</div>
+          <div class="detail">Tonte, taille, nettoyage d'automne : les passages sont programmés à l'avance. Le chiffre d'affaires tombe même les mois creux.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dossier-pied">
+      <strong>C'est la datation qui rend un droit réclamable.</strong> Un délai, une majoration,
+      un intérêt de retard ne s'ouvrent qu'à une condition : pouvoir prouver <em>le jour où la
+      demande a été faite</em> et <em>que le dossier était complet ce jour-là</em>. Un appel
+      téléphonique ne laisse pas de trace. Un envoi daté, oui. C'est ce que le relevé ci-dessus
+      conserve — et c'est aussi ce qui fait qu'un dossier peut être défendu, des mois plus tard,
+      sans avoir à reconstituer l'histoire de mémoire.
+    </div>
+  </div>
+
+  <p style="font-size:14.5px;color:var(--gris);margin-bottom:0">
+    Ce dossier est un exemple. Il n'a pas été pris chez vous — si vous préférez partir d'un de
+    vos vrais devis, dites-le, on le suit ensemble.
+  </p>
+</div></section>
+
+<div class="sep"></div>
+
+<section id="quiz-section"><div class="enveloppe">
+
+  <div id="intro" class="js-only">
+    <h2>Votre chiffre, en 40 secondes</h2>
+    <p class="intro-section">Quatre chiffres sur votre activité, deux questions sur vos
+    habitudes. Vous voyez le résultat immédiatement — sans donner votre email.</p>
+
+    <div class="carte-2" style="margin-bottom:22px">
+      <h4>Ce que le calcul utilise</h4>
+      <p style="font-size:14.5px;color:var(--gris);margin:0">
+        Les taux du secteur, pas des chiffres inventés pour vous impressionner. Ils sont affichés
+        en clair dans le résultat, et vous pouvez les contester. Si votre affaire tient déjà, on
+        vous le dira aussi.
+      </p>
+    </div>
+
+    <button class="bouton" onclick="demarrer()">Commencer</button>
+    <p style="font-size:13.5px;color:var(--gris-2);margin-top:16px">
+      Aucune inscription. Aucun appel. Le résultat s'affiche tout seul.
+    </p>
+  </div>
+
+  <div id="quiz" class="js-only" style="display:none">
+    <div id="zone-pre-rempli"></div>
+
+    <h2 id="titre-1">Votre activité</h2>
+    <p class="intro-section" style="margin-bottom:30px">Des ordres de grandeur suffisent.
+    Vous pourrez les corriger après : le calcul se refait tout seul.</p>
+
+    <div class="bloc-question">
+      <div class="intitule"><span class="num">1</span> Combien de devis partent chaque mois ?</div>
+      <div class="aide">Toutes demandes confondues : entretien, création, élagage, aménagement.</div>
       <div class="glissiere">
-        <input type="range" id="panier" min="300" max="15000" step="100" value="3000" oninput="maj('panier','v_panier','€')">
+        <input type="range" id="devis" min="1" max="40" value="10" oninput="maj()">
+        <div class="valeur" id="v_devis">10 / mois</div>
+      </div>
+    </div>
+
+    <div class="bloc-question">
+      <div class="intitule"><span class="num">2</span> Combien vaut un chantier, en moyenne ?</div>
+      <div class="aide">Le panier moyen de vos devis signés. Création comprise.</div>
+      <div class="glissiere">
+        <input type="range" id="panier" min="300" max="15000" step="100" value="3000" oninput="maj()">
         <div class="valeur" id="v_panier">3 000 €</div>
       </div>
     </div>
 
-    <div class="question">
-      <label for="appels">Appels manqués par semaine</label>
-      <p class="aide">Les fois où le téléphone sonne et que personne ne décroche.</p>
+    <div class="bloc-question">
+      <div class="intitule"><span class="num">3</span> Combien d'appels ne sont pas décrochés, par semaine ?</div>
+      <div class="aide">Quand vous êtes sur un chantier, en taille, ou les mains prises.</div>
       <div class="glissiere">
-        <input type="range" id="appels" min="0" max="25" value="4" oninput="maj('appels','v_appels','/sem.')">
-        <div class="valeur" id="v_appels">4 /sem.</div>
+        <input type="range" id="appels" min="0" max="25" value="4" oninput="maj()">
+        <div class="valeur" id="v_appels">4 / semaine</div>
       </div>
     </div>
 
-    <div class="question">
-      <label for="contrats">Clients sous contrat d'entretien</label>
-      <p class="aide">Ceux qui reviennent chaque mois, quoi qu'il arrive.</p>
+    <div class="bloc-question">
+      <div class="intitule"><span class="num">4</span> Combien de clients ont un contrat d'entretien ?</div>
+      <div class="aide">Ceux qui reviennent chaque mois, quoi qu'il arrive.</div>
       <div class="glissiere">
-        <input type="range" id="contrats" min="0" max="80" value="5" oninput="maj('contrats','v_contrats','')">
-        <div class="valeur" id="v_contrats">5</div>
+        <input type="range" id="contrats" min="0" max="80" value="5" oninput="maj()">
+        <div class="valeur" id="v_contrats">5 clients</div>
       </div>
     </div>
 
-    <h2 style="margin-top:36px">Vos habitudes</h2>
+    <h2 style="margin:48px 0 14px">Vos habitudes</h2>
+    <p class="intro-section" style="margin-bottom:30px">Répondez franchement — personne ne
+    lira ces réponses à part vous.</p>
 
-    <div class="question">
-      <label>Un devis part, et le client ne répond pas. Il se passe quoi ?</label>
+    <div class="bloc-question">
+      <div class="intitule"><span class="num">5</span> Un devis part, le client ne répond pas. Que se passe-t-il ensuite ?</div>
       <div class="choix" id="q1">
-        <button onclick="choisir('q1',0)">Rien. Je passe au suivant.</button>
-        <button onclick="choisir('q1',1)">J'y pense, mais je n'ai pas le temps.</button>
-        <button onclick="choisir('q1',2)">Je rappelle une fois, si j'y pense.</button>
-        <button onclick="choisir('q1',3)">Tout est relancé automatiquement, à date fixe.</button>
+        <button onclick="choisir('q1',0)"><span class="case"></span><span>Rien. Je passe au suivant, j'ai du travail.</span></button>
+        <button onclick="choisir('q1',1)"><span class="case"></span><span>J'y pense, mais je n'ai jamais le temps de m'y mettre.</span></button>
+        <button onclick="choisir('q1',2)"><span class="case"></span><span>Je rappelle une fois, si j'y pense. Ensuite j'oublie.</span></button>
+        <button onclick="choisir('q1',3)"><span class="case"></span><span>Tout est relancé automatiquement, à date fixe, sans que j'y touche.</span></button>
       </div>
     </div>
 
-    <div class="question">
-      <label>Vous êtes sur un chantier, le téléphone sonne. Il se passe quoi ?</label>
+    <div class="bloc-question">
+      <div class="intitule"><span class="num">6</span> Vous êtes sur un chantier et le téléphone sonne. Que se passe-t-il ?</div>
       <div class="choix" id="q2">
-        <button onclick="choisir('q2',0)">Je ne décroche pas. Tant pis.</button>
-        <button onclick="choisir('q2',1)">Je rappelle le soir, parfois deux jours après.</button>
-        <button onclick="choisir('q2',2)">Je renvoie un SMS quand j'y pense.</button>
-        <button onclick="choisir('q2',3)">Le client est pris en charge tout de suite, même sans moi.</button>
+        <button onclick="choisir('q2',0)"><span class="case"></span><span>Je ne décroche pas. Tant pis.</span></button>
+        <button onclick="choisir('q2',1)"><span class="case"></span><span>Je rappelle le soir, parfois deux jours après.</span></button>
+        <button onclick="choisir('q2',2)"><span class="case"></span><span>J'envoie un SMS quand j'y pense.</span></button>
+        <button onclick="choisir('q2',3)"><span class="case"></span><span>Le client est pris en charge tout de suite, même sans moi.</span></button>
       </div>
+    </div>
+
+    <div style="background:var(--fond-2);border:1px dashed var(--bord);border-radius:var(--r);
+      padding:20px;text-align:center">
+      <p style="font-size:14.5px;color:var(--gris);margin:0">
+        Répondez aux deux questions du bas, et le résultat s'affiche.
+      </p>
     </div>
   </div>
 
   <div id="resultat" class="js-only" style="display:none">
-    <div class="verdict" id="verdict-texte"></div>
+    <div class="verdict" id="verdict-bloc">
+      <div class="tete" id="verdict-tete">Votre résultat</div>
+      <h3 id="verdict-titre">—</h3>
+      <p id="verdict-texte">—</p>
+    </div>
 
-    <h2>Ce que ça représente</h2>
-    <div class="carte-blanche" style="padding:10px 24px">
-      <div class="ligne-resultat">
-        <span class="libelle">Récupérable sur vos devis non signés</span>
-        <span class="montant rouge" id="r_recup">—</span>
+    <h2>Ce que ça donne, en euros</h2>
+    <p class="intro-section">Trois choses différentes — elles ne s'additionnent pas.</p>
+
+    <div class="montants">
+      <div class="ligne principal">
+        <div class="gauche">
+          <span class="libelle">Récupérable sur vos devis non signés</span>
+          <span class="explication">De l'argent qui existait déjà, et qui est resté sur la table.</span>
+        </div>
+        <span class="chiffre or" id="r_recup">—</span>
       </div>
-      <div class="ligne-resultat">
-        <span class="libelle">Appels à reprendre cette année</span>
-        <span class="montant" id="r_appels">—</span>
+      <div class="ligne">
+        <div class="gauche">
+          <span class="libelle">Appels à reprendre sur l'année</span>
+          <span class="explication">Un comptage, pas des euros. Chacun est un chantier possible.</span>
+        </div>
+        <span class="chiffre neutre" id="r_appels">—</span>
       </div>
-      <div class="ligne-resultat">
-        <span class="libelle">Récurrent d'entretien à construire</span>
-        <span class="montant bleu" id="r_recurrent">—</span>
+      <div class="ligne">
+        <div class="gauche">
+          <span class="libelle">Récurrent d'entretien à construire</span>
+          <span class="explication">Du chiffre d'affaires neuf — il n'a jamais existé. C'est le plus solide des trois.</span>
+        </div>
+        <span class="chiffre bleu" id="r_recurrent">—</span>
       </div>
     </div>
-    <p class="note">
-      Ces trois lignes ne s'additionnent pas : la première est de l'argent laissé sur la table,
-      la deuxième un comptage, la troisième du chiffre d'affaires qui n'a jamais existé.
+
+    <p class="avert" style="margin:14px 0 34px">
+      La première ligne est une estimation, pas une promesse : elle part de vos réponses et des
+      taux du métier. Vos chiffres à vous sont dans votre comptabilité — ils valent mieux que les nôtres.
     </p>
 
-    <h2 style="margin-top:34px">Vos réponses</h2>
-    <div class="carte-blanche" id="rappel"></div>
-
-    <h2 style="margin-top:34px">Les hypothèses, en clair</h2>
-    <div class="carte-blanche">
-      <ul class="simple">
-        <li><strong>1 devis sur 4 signé</strong> — taux du bâtiment, mesuré sur 15 000 devis réels.</li>
-        <li><strong>5 % des devis non signés récupérables</strong> — notre hypothèse volontairement basse.</li>
-        <li><strong>62 % des appelants ne rappellent pas</strong> — études du secteur télécom, chiffre à prendre avec prudence.</li>
-        <li><strong>180 € par mois et par contrat</strong> — milieu de la fourchette du secteur (300 à 1 200 €/an).</li>
+    <h2>Ce que le calcul a supposé</h2>
+    <p class="intro-section">Pour que vous puissiez nous contredire.</p>
+    <div class="hypotheses" style="margin-bottom:34px">
+      <ul>
+        <li><strong>1 devis sur 4 signé</strong> — le taux du bâtiment, mesuré sur 15 000 devis réels.</li>
+        <li><strong>5 % des devis non signés récupérables</strong> — notre hypothèse, volontairement basse.</li>
+        <li><strong>62 % des appelants ne rappellent pas</strong> — études du secteur, à prendre avec prudence.</li>
+        <li><strong>180 € par mois et par contrat</strong> — le milieu de la fourchette du métier.</li>
         <li><strong>40 contrats d'entretien</strong> — le portefeuille que le secteur présente comme l'équilibre d'une activité sereine.</li>
       </ul>
-      <p class="note" style="margin-bottom:0">Ces taux sont des repères de marché, pas vos chiffres. Votre comptabilité les remplacera.</p>
     </div>
 
-    <h2 style="margin-top:34px">Recevoir le détail</h2>
-    <div class="carte-blanche">
-      <p>Le rapport détaillé — vos réponses, le calcul ligne par ligne, et les 4 points à corriger dans l'ordre.</p>
-      <form class="formulaire" onsubmit="envoyer(event)">
-        <input type="email" id="email" placeholder="votre@email.fr" required>
-        <button class="bouton" type="submit">Recevoir</button>
+    <h2>Vos réponses</h2>
+    <div class="carte" id="rappel" style="padding:6px 26px;margin-bottom:34px"></div>
+
+    <div class="capture">
+      <h3>Vous voulez le détail ?</h3>
+      <p class="sous">Je vous envoie le calcul ligne par ligne, et les quatre points à corriger
+      dans l'ordre — du plus rentable au moins urgent.</p>
+      <form class="champs" onsubmit="envoyer(event)">
+        <input type="email" id="email" placeholder="votre@email.fr" required autocomplete="email">
+        <button class="bouton" type="submit">Recevoir le détail</button>
       </form>
-      <p class="note" id="accuse" style="margin-bottom:0">
-        Cette page est une démonstration : aucun email n'est envoyé depuis ce fichier.
-      </p>
+      <p class="accuse" id="accuse">Votre adresse ne sert qu'à ça. Un message, pas de liste, pas de revente.</p>
     </div>
 
-    <div style="margin-top:30px">
+    <div style="margin-top:28px;display:flex;gap:14px;flex-wrap:wrap;align-items:center">
       <button class="bouton-clair bouton" onclick="recommencer()">Refaire avec d'autres chiffres</button>
+      <button class="bouton-lien" onclick="versTrace()">Revoir le dossier suivi</button>
     </div>
   </div>
 
-  <div class="js-only" style="height:80px"></div>
-</main>
+  <div class="js-only" style="height:96px"></div>
+</div></section>
 
-<div class="barre" id="barre">
+<footer><div class="enveloppe">
+  <p><strong>Diagnostic paysage</strong> — outil indépendant, sans inscription.</p>
+  <p>Les taux de conversion, de rappel et de rétention sont des moyennes de secteur, citées à
+  leur source dans le résultat. Les montants affichés sont des estimations, jamais des promesses.
+  Seule votre comptabilité fait foi.</p>
+  <p>Le dossier présenté plus haut est un cas illustratif, construit pour montrer un
+  enchaînement — ce n'est pas le relevé d'un client réel.</p>
+</div></footer>
+
+<div class="barre" id="barre"><div class="barre-in">
+  <div class="compte" id="compte">0 / 2</div>
+  <div class="progres"><span id="jauge"></span></div>
   <button class="bouton" id="btn-voir" disabled onclick="voir()">Voir mon chiffre</button>
-</div>
-
-<footer class="pied">
-  <div class="enveloppe">
-    <p><strong>Diagnostic paysagiste</strong> — outil de démonstration.</p>
-    <p style="margin-bottom:0">Les taux de conversion et de rappel sont des moyennes de secteur.
-    Le montant affiché est une estimation, pas une promesse. Vos données comptables sont la seule référence.</p>
-  </div>
-</footer>
+</div></div>
 
 <script>
 document.documentElement.classList.remove('nojs');
 
 var E = {
   DEVIS_NON_SIGNE: 0.75,
-  RECUP_RELANCE:   0.05,
+  RECUP_RELANCE: 0.05,
   APPEL_NON_RAPPEL: 0.62,
   SEMAINES: 4.3,
   CONTRAT_MENSUEL: 180,
@@ -269,12 +568,25 @@ var E = {
 var reponses = {q1: null, q2: null};
 
 function nombre(n){
-  return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ");
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F");
 }
 
-function maj(id, cible, suffixe){
-  var v = parseInt(document.getElementById(id).value, 10);
-  document.getElementById(cible).textContent = nombre(v) + (suffixe ? " " + suffixe : "");
+function maj(){
+  var d = parseInt(document.getElementById("devis").value, 10);
+  var p = parseInt(document.getElementById("panier").value, 10);
+  var a = parseInt(document.getElementById("appels").value, 10);
+  var c = parseInt(document.getElementById("contrats").value, 10);
+  document.getElementById("v_devis").textContent    = nombre(d) + " / mois";
+  document.getElementById("v_panier").textContent   = nombre(p) + " €";
+  document.getElementById("v_appels").textContent   = nombre(a) + " / semaine";
+  document.getElementById("v_contrats").textContent = nombre(c) + (c > 1 ? " clients" : " client");
+}
+
+function majJauge(){
+  var faits = (reponses.q1 !== null ? 1 : 0) + (reponses.q2 !== null ? 1 : 0);
+  document.getElementById("compte").textContent = faits + " / 2";
+  document.getElementById("jauge").style.width = (faits / 2 * 100) + "%";
+  document.getElementById("btn-voir").disabled = faits < 2;
 }
 
 function choisir(groupe, niveau){
@@ -283,16 +595,20 @@ function choisir(groupe, niveau){
   for (var i = 0; i < btns.length; i++){
     btns[i].classList.toggle("actif", i === niveau);
   }
-  var barre = document.getElementById("barre");
-  barre.classList.add("visible");
-  document.getElementById("btn-voir").disabled = !(reponses.q1 !== null && reponses.q2 !== null);
+  document.getElementById("barre").classList.add("visible");
+  majJauge();
 }
 
 function demarrer(){
   document.getElementById("intro").style.display = "none";
   document.getElementById("quiz").style.display = "block";
   document.getElementById("barre").classList.add("visible");
-  window.scrollTo({top:0, behavior:"smooth"});
+  majJauge();
+  window.scrollTo({top: document.getElementById("quiz-section").offsetTop - 70, behavior:"smooth"});
+}
+
+function versTrace(){
+  document.getElementById("trace").scrollIntoView({behavior:"smooth", block:"start"});
 }
 
 function calculer(devisMois, panier, appelsSem, contrats, relance, reponse){
@@ -302,99 +618,103 @@ function calculer(devisMois, panier, appelsSem, contrats, relance, reponse){
 
   var appelsManques = appelsSem * E.SEMAINES * 12 * E.APPEL_NON_RAPPEL;
   var fReponse = (3 - reponse) / 3;
-  var appelsAReprendre = appelsManques * fReponse;
+  var appels = appelsManques * fReponse;
 
   var manque = Math.max(0, E.OBJECTIF_CONTRATS - contrats);
   var recurrent = manque * E.CONTRAT_MENSUEL * 12;
 
   return {
     recuperable: Math.round(recuperable),
-    appels: Math.round(appelsAReprendre),
+    appels: Math.round(appels),
     recurrent: Math.round(recurrent),
     ca: Math.round(devisMois * 12 * E.CONV_DEVIS * panier)
   };
 }
 
-function verdict(recup, ca, appels, recurrent){
-  var part = ca > 0 ? recup / ca : 0;
-  if (recup === 0 && appels === 0){
-    return {titre:"Rien à signaler", texte:"Votre organisation tient déjà. Continuez comme ça — et surveillez le récurrent, c'est là qu'est la marge qui reste.", couleur:"var(--vert)"};
+function verdict(r){
+  var part = r.ca > 0 ? r.recuperable / r.ca : 0;
+  if (r.recuperable === 0 && r.appels === 0){
+    return {classe:"v-vert", tete:"Bonne nouvelle", titre:"Votre affaire tient debout",
+      texte:"Rien ne fuit chez vous : vos devis sont suivis, vos appels sont pris. Il n'y a rien a vendre ici — et c'est tant mieux. Le seul terrain qui reste ouvert, c'est le recurrent d'entretien : c'est lui qui porte une annee sereine."};
   }
   if (part < 0.05){
-    return {titre:"Ça tient, mais ça fuit", texte:"Votre fuite est modérée. Elle est réelle, et c'est le genre d'écart qui se creuse les années chargées.", couleur:"var(--bleu)"};
+    return {classe:"", tete:"Écart modéré", titre:"Ça tient — mais ça fuit doucement",
+      texte:"Votre fuite est réelle sans être grave. C'est le genre d'écart qui ne se voit pas en mars et qui se remarque en décembre, quand les chantiers se sont raréfiés."};
   }
   if (part < 0.11){
-    return {titre:"Vous laissez passer de l'argent", texte:"Le problème n'est pas votre travail. C'est que rien ne se relance tout seul quand vous êtes sur un chantier.", couleur:"var(--orange)"};
+    return {classe:"v-or", tete:"Attention", titre:"Vous laissez passer de l'argent",
+      texte:"Le problème n'est pas votre travail. C'est qu'entre le devis envoyé et le client qui signe, il n'y a personne — et pendant ce temps, vous êtes sur un chantier."};
   }
-  return {titre:"Une fuite sérieuse", texte:"À ce niveau, ce n'est plus un détail d'organisation : c'est un poste de perte à part entière, qui pèse chaque année.", couleur:"var(--orange)"};
+  return {classe:"v-or", tete:"Priorité haute", titre:"C'est un poste de perte à part entière",
+    texte:"À ce niveau, ce n'est plus un détail d'organisation. C'est un manque à gagner qui se répète chaque mois, et qui pèse plus lourd que beaucoup de vos charges."};
 }
 
 function voir(){
   var devisMois = parseInt(document.getElementById("devis").value, 10);
-  var panier = parseInt(document.getElementById("panier").value, 10);
+  var panier    = parseInt(document.getElementById("panier").value, 10);
   var appelsSem = parseInt(document.getElementById("appels").value, 10);
-  var contrats = parseInt(document.getElementById("contrats").value, 10);
+  var contrats  = parseInt(document.getElementById("contrats").value, 10);
 
   var r = calculer(devisMois, panier, appelsSem, contrats, reponses.q1, reponses.q2);
+  var v = verdict(r);
 
-  document.getElementById("r_recup").textContent = nombre(r.recuperable) + " €";
-  document.getElementById("r_appels").textContent = nombre(r.appels);
+  document.getElementById("r_recup").textContent     = nombre(r.recuperable) + " €";
+  document.getElementById("r_appels").textContent    = nombre(r.appels);
   document.getElementById("r_recurrent").textContent = nombre(r.recurrent) + " €";
 
-  var v = verdict(r.recuperable, r.ca, r.appels, r.recurrent);
-  var bloc = document.getElementById("verdict-texte");
-  bloc.style.borderLeftColor = v.couleur;
-  bloc.innerHTML = "<h3>" + v.titre + "</h3><p style='margin:0'>" + v.texte + "</p>";
+  var bloc = document.getElementById("verdict-bloc");
+  bloc.className = "verdict " + v.classe;
+  document.getElementById("verdict-tete").textContent  = v.tete;
+  document.getElementById("verdict-titre").textContent = v.titre;
+  document.getElementById("verdict-texte").textContent = v.texte;
 
-  var libellesQ1 = ["Rien — je passe au suivant", "J'y pense mais pas le temps", "Je rappelle une fois", "Relance automatique à date fixe"];
-  var libellesQ2 = ["Je ne décroche pas", "Je rappelle le soir", "SMS quand j'y pense", "Prise en charge immédiate"];
+  var L1 = ["Rien — je passe au suivant","J'y pense, mais pas le temps","Je rappelle une fois, puis j'oublie","Relance automatique à date fixe"];
+  var L2 = ["Je ne décroche pas","Je rappelle le soir","SMS quand j'y pense","Prise en charge immédiate"];
   document.getElementById("rappel").innerHTML =
-    "<div class='ligne-resultat'><span class='libelle'>Devis envoyés par mois</span><span class='montant'>" + nombre(devisMois) + "</span></div>" +
-    "<div class='ligne-resultat'><span class='libelle'>Panier moyen</span><span class='montant'>" + nombre(panier) + " €</span></div>" +
-    "<div class='ligne-resultat'><span class='libelle'>Appels manqués par semaine</span><span class='montant'>" + nombre(appelsSem) + "</span></div>" +
-    "<div class='ligne-resultat'><span class='libelle'>Contrats d'entretien</span><span class='montant'>" + nombre(contrats) + "</span></div>" +
-    "<div class='ligne-resultat'><span class='libelle'>Devis non signés</span><span class='montant'>" + libellesQ1[reponses.q1] + "</span></div>" +
-    "<div class='ligne-resultat'><span class='libelle'>Appel manqué</span><span class='montant'>" + libellesQ2[reponses.q2] + "</span></div>";
+    "<div class='ligne'><div class='gauche'><span class='libelle'>Devis envoyés par mois</span></div><span class='chiffre neutre' style='font-size:19px'>" + nombre(devisMois) + "</span></div>" +
+    "<div class='ligne'><div class='gauche'><span class='libelle'>Panier moyen</span></div><span class='chiffre neutre' style='font-size:19px'>" + nombre(panier) + " \u20AC</span></div>" +
+    "<div class='ligne'><div class='gauche'><span class='libelle'>Appels manqués par semaine</span></div><span class='chiffre neutre' style='font-size:19px'>" + nombre(appelsSem) + "</span></div>" +
+    "<div class='ligne'><div class='gauche'><span class='libelle'>Contrats d'entretien en cours</span></div><span class='chiffre neutre' style='font-size:19px'>" + nombre(contrats) + "</span></div>" +
+    "<div class='ligne'><div class='gauche'><span class='libelle'>Devis non signés</span></div><span class='chiffre neutre' style='font-size:19px'>" + L1[reponses.q1] + "</span></div>" +
+    "<div class='ligne'><div class='gauche'><span class='libelle'>Appel manqué</span></div><span class='chiffre neutre' style='font-size:19px'>" + L2[reponses.q2] + "</span></div>";
 
   document.getElementById("quiz").style.display = "none";
   document.getElementById("resultat").style.display = "block";
   document.getElementById("barre").classList.remove("visible");
-  window.scrollTo({top:0, behavior:"smooth"});
+  window.scrollTo({top: document.getElementById("quiz-section").offsetTop - 70, behavior:"smooth"});
 }
 
 function envoyer(ev){
   ev.preventDefault();
   var e = document.getElementById("email").value;
   var accuse = document.getElementById("accuse");
+  accuse.className = "accuse";
   accuse.textContent = "Envoi en cours…";
 
-  // Le lead part directement dans la boîte Gmail par FormSubmit.
-  // Aucun serveur, aucune base : un service tiers qui relaie un formulaire vers un email.
   var donnees = new FormData();
   donnees.append("email_du_prospect", e);
   donnees.append("ville", new URLSearchParams(window.location.search).get("v") || "non précisée");
   donnees.append("recuperable", document.getElementById("r_recup").textContent);
-  donnees.append("appels", document.getElementById("r_appels").textContent);
-  donnees.append("recurrent", document.getElementById("r_recurrent").textContent);
+  donnees.append("appels_a_reprendre", document.getElementById("r_appels").textContent);
+  donnees.append("recurrent_a_construire", document.getElementById("r_recurrent").textContent);
+  donnees.append("verdict", document.getElementById("verdict-titre").textContent);
   donnees.append("devis_par_mois", document.getElementById("devis").value);
   donnees.append("panier_moyen", document.getElementById("panier").value);
-  donnees.append("appels_manques_par_semaine", document.getElementById("appels").value);
+  donnees.append("appels_manques_semaine", document.getElementById("appels").value);
   donnees.append("contrats_entretien", document.getElementById("contrats").value);
-  donnees.append("source", window.location.href);
+  donnees.append("page_source", window.location.href);
 
-  fetch("https://formsubmit.co/ajax/nj.secure69@gmail.com", {
-    method: "POST",
-    body: donnees
-  })
-  .then(function(r){ return r.json(); })
-  .then(function(){
-    accuse.textContent = "C'est noté — " + e + ". Vous recevrez le détail à cette adresse.";
-    accuse.style.color = "var(--vert)";
-    document.querySelector(".formulaire").style.display = "none";
-  })
-  .catch(function(){
-    accuse.textContent = "L'envoi a échoué. Écrivez-moi directement, je vous renvoie le détail.";
-  });
+  fetch("https://formsubmit.co/ajax/nj.secure69@gmail.com", {method:"POST", body:donnees})
+    .then(function(r){ return r.json(); })
+    .then(function(){
+      accuse.className = "accuse ok";
+      accuse.textContent = "C'est noté — " + e + ". Vous recevez le détail à cette adresse.";
+      document.querySelector(".champs").style.display = "none";
+    })
+    .catch(function(){
+      accuse.className = "accuse ko";
+      accuse.textContent = "L'envoi n'est pas passé. Écrivez-moi directement, je vous renvoie le détail.";
+    });
 }
 
 function recommencer(){
@@ -402,54 +722,43 @@ function recommencer(){
   document.getElementById("quiz").style.display = "block";
   document.getElementById("barre").classList.add("visible");
   reponses = {q1: null, q2: null};
-  document.getElementById("btn-voir").disabled = true;
   var groupes = ["q1","q2"];
   for (var g = 0; g < groupes.length; g++){
     var btns = document.getElementById(groupes[g]).getElementsByTagName("button");
     for (var i = 0; i < btns.length; i++){ btns[i].classList.remove("actif"); }
   }
-  window.scrollTo({top:0, behavior:"smooth"});
+  majJauge();
+  window.scrollTo({top: document.getElementById("quiz-section").offsetTop - 70, behavior:"smooth"});
 }
 
-maj('devis','v_devis','/mois');
-maj('panier','v_panier','€');
-maj('appels','v_appels','/sem.');
-maj('contrats','v_contrats','');
+maj();
 
-// --- Pré-remplissage par l'URL -------------------------------------------
-// Un lien envoyé à un paysagiste peut arriver avec ses chiffres déjà posés :
-//   index.html?d=14&p=2500&a=6&c=8&v=1
-// d = devis/mois · p = panier moyen · a = appels manqués/sem · c = contrats · v = sa ville
 (function(){
   var q = new URLSearchParams(window.location.search);
   function poser(id, cle, mini, maxi){
     if (!q.has(cle)) return;
     var v = parseInt(q.get(cle), 10);
     if (isNaN(v)) return;
-    v = Math.max(mini, Math.min(maxi, v));
-    document.getElementById(id).value = v;
+    document.getElementById(id).value = Math.max(mini, Math.min(maxi, v));
   }
-  poser('devis', 'd', 1, 40);
-  poser('panier', 'p', 300, 15000);
-  poser('appels', 'a', 0, 25);
-  poser('contrats', 'c', 0, 80);
-  maj('devis','v_devis','/mois');
-  maj('panier','v_panier','€');
-  maj('appels','v_appels','/sem.');
-  maj('contrats','v_contrats','');
+  poser("devis","d",1,40);
+  poser("panier","p",300,15000);
+  poser("appels","a",0,25);
+  poser("contrats","c",0,80);
+  maj();
 
-  // si des chiffres sont arrivés, on le dit — sans mentir sur leur origine
-  var perso = q.has('d') || q.has('p') || q.has('a') || q.has('c');
-  var ville = q.get('v');
+  var perso = q.has("d") || q.has("p") || q.has("a") || q.has("c");
+  var ville = q.get("v");
   if (perso){
-    var bloc = document.createElement('div');
-    bloc.className = 'carte';
-    bloc.style.marginBottom = '22px';
-    bloc.innerHTML = '<p style="margin:0"><strong>Vos chiffres sont pré-remplis'
-      + (ville ? ' pour ' + ville : '')
-      + '.</strong> Corrigez-les si besoin — le calcul se met à jour tout seul.</p>';
-    var cible = document.getElementById('intro');
-    if (cible) cible.insertBefore(bloc, cible.firstChild);
+    var html =
+      "<div class='pre-rempli'><div class='icone'>i</div>" +
+      "<p><strong>Vos chiffres sont déjà posés" + (ville ? " pour " + ville : "") +
+      ".</strong><br>Ce sont des ordres de grandeur du métier, pas vos comptes. Corrigez-les : " +
+      "chaque curseur refait le calcul.</p></div>";
+    var z1 = document.getElementById("zone-pre-rempli-hero");
+    if (z1) z1.innerHTML = html;
+    var z2 = document.getElementById("zone-pre-rempli");
+    if (z2) z2.innerHTML = "";
   }
 })();
 </script>
