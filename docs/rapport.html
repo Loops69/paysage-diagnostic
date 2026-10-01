@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Votre rapport détaillé — diagnostic paysage</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="Le détail de votre diagnostic : le calcul ligne par ligne, et les 4 points à corriger dans l'ordre.">
+<style>
+  :root{
+    --bleu:#4F7CFF; --bleu-fonce:#3A61D9; --bleu-pale:#EEF3FF; --bleu-bord:#D6E0FF;
+    --encre:#0B1220; --encre-doux:#1E293B; --gris:#5B6478; --gris-2:#8A93A6;
+    --fond:#FFF; --fond-2:#F7F9FD; --bord:#E5EAF3;
+    --or:#E8734A; --or-pale:#FFF4EF; --vert:#12A05C; --vert-pale:#EAF7F1;
+    --r:16px; --r-s:11px;
+    --ombre:0 1px 2px rgba(11,18,32,.04), 0 8px 24px rgba(11,18,32,.06);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--fond);color:var(--encre);
+    font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased}
+  .env{max-width:820px;margin:0 auto;padding:0 24px}
+  .entete{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.9);
+    backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--bord)}
+  .entete-in{max-width:820px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:10px}
+  .point{width:10px;height:10px;border-radius:50%;background:var(--bleu);
+    box-shadow:0 0 0 4px var(--bleu-pale)}
+  .marque{font-weight:800;letter-spacing:-.02em;font-size:15px}
+  .entete .droite{margin-left:auto;font-size:13px;color:var(--gris-2);font-weight:600}
+  .hero{padding:60px 0 40px}
+  .etiquette{display:inline-flex;background:var(--bleu-pale);border:1px solid var(--bleu-bord);
+    color:var(--bleu-fonce);border-radius:100px;padding:7px 15px;font-size:13px;font-weight:700;
+    margin-bottom:24px}
+  h1{font-size:clamp(28px,5.4vw,44px);line-height:1.1;letter-spacing:-.035em;font-weight:800;
+    margin-bottom:18px;max-width:16ch}
+  h1 em{font-style:normal;color:var(--bleu)}
+  .chapeau{font-size:17.5px;color:var(--gris);max-width:58ch;margin-bottom:0}
+  section{padding:52px 0}
+  .sep{height:1px;background:var(--bord)}
+  h2{font-size:clamp(22px,3.4vw,30px);line-height:1.16;letter-spacing:-.028em;font-weight:800;
+    margin-bottom:14px}
+  h3{font-size:18px;letter-spacing:-.02em;font-weight:800;margin-bottom:10px}
+  .intro{font-size:17px;color:var(--gris);max-width:60ch;margin-bottom:30px}
+  p+p{margin-top:12px}
+
+  .montants{background:#fff;border:1px solid var(--bord);border-radius:var(--r);overflow:hidden;
+    box-shadow:var(--ombre)}
+  .ligne{display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:20px 24px;border-bottom:1px solid var(--bord)}
+  .ligne:last-child{border-bottom:0}
+  .ligne .g{display:flex;flex-direction:column;gap:3px}
+  .ligne .lib{font-size:15.5px;font-weight:700}
+  .ligne .exp{font-size:13.5px;color:var(--gris)}
+  .ligne .ch{font-weight:800;font-size:26px;letter-spacing:-.03em;white-space:nowrap;
+    font-variant-numeric:tabular-nums}
+  .ligne.principal{background:var(--or-pale)}
+  .or{color:var(--or)} .bleu{color:var(--bleu)} .neutre{color:var(--gris)}
+  .note{font-size:13.5px;color:var(--gris);margin-top:12px;line-height:1.55}
+
+  .calcul{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);
+    padding:22px 24px;margin-top:8px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:13.5px;color:var(--encre-doux);line-height:2;overflow-x:auto;white-space:pre}
+  .calcul b{color:var(--bleu-fonce)}
+
+  .point-correction{display:grid;grid-template-columns:44px 1fr;gap:18px;padding:22px 0;
+    border-bottom:1px solid var(--bord)}
+  .point-correction:last-child{border-bottom:0}
+  .point-correction .rang{width:44px;height:44px;border-radius:12px;background:var(--bleu-pale);
+    border:1px solid var(--bleu-bord);display:flex;align-items:center;justify-content:center;
+    font-weight:800;font-size:19px;color:var(--bleu-fonce);flex:0 0 auto}
+  .point-correction .quoi{font-size:17px;font-weight:800;letter-spacing:-.02em;margin-bottom:6px}
+  .point-correction .pourquoi{font-size:15px;color:var(--gris);margin-bottom:10px}
+  .point-correction .gain{display:inline-block;background:var(--vert-pale);color:var(--vert);
+    font-weight:800;font-size:13px;padding:4px 11px;border-radius:100px}
+  .point-correction .cout{display:inline-block;background:var(--or-pale);color:var(--or);
+    font-weight:800;font-size:13px;padding:4px 11px;border-radius:100px}
+
+  .encart{background:var(--encre);border-radius:var(--r);padding:34px;color:#fff}
+  .encart h3{color:#fff;font-size:21px;margin-bottom:12px}
+  .encart p{color:#94A3B8;font-size:15.5px;max-width:54ch}
+  .encart p+p{margin-top:12px}
+  .encart strong{color:#fff}
+  .encart .bouton{display:inline-block;background:var(--bleu);color:#fff;border:0;
+    border-radius:var(--r-s);padding:16px 28px;font:inherit;font-weight:800;font-size:16px;
+    cursor:pointer;text-decoration:none;margin-top:22px;
+    box-shadow:0 6px 18px rgba(79,124,255,.30)}
+  .encart .bouton:hover{background:var(--bleu-fonce)}
+
+  .hypo{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);padding:22px 24px}
+  .hypo ul{list-style:none;display:flex;flex-direction:column;gap:10px}
+  .hypo li{font-size:14.5px;color:var(--encre-doux);padding-left:22px;position:relative}
+  .hypo li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;
+    border-radius:50%;background:var(--bleu)}
+  .hypo strong{font-weight:800;color:var(--encre)}
+
+  footer{border-top:1px solid var(--bord);padding:36px 0 54px;background:var(--fond-2)}
+  footer p{font-size:13.5px;color:var(--gris-2);max-width:66ch}
+  footer p+p{margin-top:9px}
+  footer strong{color:var(--gris)}
+  .vide{text-align:center;padding:60px 0}
+  .vide h2{margin-bottom:10px}
+  @media(max-width:640px){
+    .ligne{padding:16px 18px;flex-direction:column;align-items:flex-start;gap:6px}
+    .ligne .ch{font-size:30px}
+    .encart{padding:24px}
+    .point-correction{grid-template-columns:38px 1fr;gap:14px}
+    .point-correction .rang{width:38px;height:38px;font-size:17px;border-radius:10px}
+  }
+</style>
+</head>
+<body>
+<div class="entete"><div class="entete-in">
+  <span class="point"></span><span class="marque">Diagnostic paysage</span>
+  <span class="droite">Votre rapport</span>
+</div></div>
+
+<div id="vide" class="env vide" style="display:none">
+  <h2>Ce rapport a besoin de vos chiffres</h2>
+  <p class="intro" style="margin:0 auto">Ce lien est incomplet. Refaites le diagnostic
+  pour obtenir le vôtre.</p>
+</div>
+
+<div id="contenu" style="display:none">
+
+<div class="hero"><div class="env">
+  <div class="etiquette" id="etq">Votre rapport</div>
+  <h1>Votre chiffre, <em>et ce qu'il faut corriger</em>.</h1>
+  <p class="chapeau" id="resume">—</p>
+</div></div>
+
+<div class="env"><div class="sep"></div></div>
+
+<section><div class="env">
+  <h2>Ce que ça représente</h2>
+  <p class="intro">Trois choses différentes — elles ne s'additionnent pas.</p>
+  <div class="montants">
+    <div class="ligne principal">
+      <div class="g">
+        <span class="lib">Récupérable sur vos devis non signés</span>
+        <span class="exp">De l'argent qui existait déjà, et qui est resté sur la table.</span>
+      </div>
+      <span class="ch or" id="r_recup">—</span>
+    </div>
+    <div class="ligne">
+      <div class="g">
+        <span class="lib">Appels à reprendre sur l'année</span>
+        <span class="exp">Un comptage. Chacun est un chantier possible.</span>
+      </div>
+      <span class="ch neutre" id="r_appels">—</span>
+    </div>
+    <div class="ligne">
+      <div class="g">
+        <span class="lib">Récurrent d'entretien à construire</span>
+        <span class="exp">Du chiffre d'affaires neuf. C'est le plus solide des trois.</span>
+      </div>
+      <span class="ch bleu" id="r_recurrent">—</span>
+    </div>
+  </div>
+  <p class="note">La première ligne est une estimation, pas une promesse. Vos chiffres à vous
+  sont dans votre comptabilité — ils valent mieux que les nôtres.</p>
+</div></section>
+
+<div class="env"><div class="sep"></div></div>
+
+<section><div class="env">
+  <h2>Le calcul, ligne par ligne</h2>
+  <p class="intro">Pour que vous puissiez nous contredire sur chaque étape.</p>
+  <div class="calcul" id="detail-calcul">—</div>
+</div></section>
+
+<div class="env"><div class="sep"></div></div>
+
+<section><div class="env">
+  <h2>Les 4 points à corriger, dans l'ordre</h2>
+  <p class="intro">Du plus rentable au moins urgent. Le premier rapporte le plus, tout de suite.</p>
+
+  <div class="point-correction">
+    <div class="rang">1</div>
+    <div>
+      <div class="quoi">Relancer chaque devis non signé</div>
+      <div class="pourquoi">Un devis parti et jamais relancé est un devis perdu. Ce n'est pas
+      une question de prix : le client a souvent juste une hésitation qu'il n'a pas dite.
+      Une relance au bon moment rouvre la conversation — et c'est là que se signent les
+      chantiers qu'on croyait perdus.</div>
+      <span class="gain" id="gain1">—</span>
+    </div>
+  </div>
+
+  <div class="point-correction">
+    <div class="rang">2</div>
+    <div>
+      <div class="quoi">Ne plus perdre un appel</div>
+      <div class="pourquoi">Une personne qui n'a pas eu de réponse ne rappelle pas : elle
+      appelle le suivant. Ce n'est pas de la négligence — vous êtes sur un chantier, les
+      mains prises. Le problème n'est pas vous, c'est qu'il n'y a personne pour décrocher.</div>
+      <span class="cout" id="gain2">—</span>
+    </div>
+  </div>
+
+  <div class="point-correction">
+    <div class="rang">3</div>
+    <div>
+      <div class="quoi">Transformer les chantiers ponctuels en contrats d'entretien</div>
+      <div class="pourquoi">Un jardin créé une fois se rend une fois. Le même jardin entretenu
+      se facture chaque mois, été comme hiver. C'est ce portefeuille qui fait passer d'une
+      activité qui survit à une activité qui se projette — et il se propose au moment
+      de la signature, quand le client a déjà dit oui.</div>
+      <span class="gain" id="gain3">—</span>
+    </div>
+  </div>
+
+  <div class="point-correction">
+    <div class="rang">4</div>
+    <div>
+      <div class="quoi">Programmer la saisonnalité</div>
+      <div class="pourquoi">Tonte, taille, nettoyage d'automne : ce sont des passages prévisibles.
+      Les inscrire à l'avance, c'est remplir les mois creux sans prospecter — le carnet se
+      remplit tout seul pendant que vous travaillez.</div>
+      <span class="gain">plan de charge lissé sur l'année</span>
+    </div>
+  </div>
+</div></section>
+
+<div class="env"><div class="sep"></div></div>
+
+<section><div class="env">
+  <h2>Ce que le calcul a supposé</h2>
+  <p class="intro">Pour que vous puissiez nous contredire.</p>
+  <div class="hypo" style="margin-bottom:30px">
+    <ul>
+      <li><strong>1 devis sur 4 signé</strong> — le taux du bâtiment, mesuré sur 15 000 devis réels.</li>
+      <li><strong>5 % des devis non signés récupérables</strong> — notre hypothèse, volontairement basse.</li>
+      <li><strong>62 % des appelants ne rappellent pas</strong> — études du secteur, à prendre avec prudence.</li>
+      <li><strong>180 € par mois et par contrat</strong> — le milieu de la fourchette du métier.</li>
+      <li><strong>40 contrats d'entretien</strong> — le portefeuille que le secteur présente comme l'équilibre d'une activité sereine.</li>
+    </ul>
+  </div>
+
+  <div class="encart">
+    <h3>Je vais le construire, ou pas ?</h3>
+    <p>Cet outil n'existe pas encore pour votre métier. Ce que je sais faire, c'est
+    <strong>le module qui relance vos devis tout seul et qui prend les appels quand vous
+    êtes sur un chantier</strong>.</p>
+    <p>Si vous voulez, je vous le montre sur <strong>vos</strong> devis — pas sur une
+    démonstration. Vous me donnez trois devis récents qui n'ont pas abouti, je vous montre
+    ce qui se serait passé, et vous jugez.</p>
+    <p><strong>Pas d'engagement, pas de facture, pas d'appel.</strong></p>
+    <a class="bouton" href="mailto:nj.secure69@gmail.com?subject=Je%20veux%20voir%20sur%20mes%20devis&amp;body=Bonjour%2C%0A%0AJ%27ai%20eu%20mon%20chiffre%20(%3C%20mettre%20le%20montant%20%3E)%20et%20je%20veux%20voir%20ce%20que%20%C3%A7a%20donne%20sur%20mes%20devis.%0A%0AMon%20m%C3%A9tier%20%3A%0AMa%20zone%20%3A%0A">Répondre à ce message</a>
+  </div>
+</div></section>
+
+<div class="env"><div class="sep"></div></div>
+
+<section><div class="env">
+  <h2>Vos réponses</h2>
+  <div class="montants" id="rappel"></div>
+</div></section>
+
+</div>
+
+<footer><div class="env">
+  <p><strong>Diagnostic paysage</strong> — rapport de démonstration, sans inscription.</p>
+  <p>Les taux utilisés sont des moyennes de secteur, citées au-dessus. Les montants sont des
+  estimations, jamais des promesses. Seule votre comptabilité fait foi.</p>
+  <p>Ce rapport ne s'indexe pas et n'est pas conservé sur un serveur : les chiffres voyagent
+  dans le lien, rien d'autre.</p>
+</div></footer>
+
+<script>
+function nombre(n){
+  return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, "\u202F");
+}
+function euros(n){ return nombre(n) + " \u20AC"; }
+
+var E = {
+  DEVIS_NON_SIGNE: 0.75, RECUP_RELANCE: 0.05, APPEL_NON_RAPPEL: 0.62,
+  SEMAINES: 4.3, CONTRAT_MENSUEL: 180, OBJECTIF_CONTRATS: 40, CONV_DEVIS: 0.25
+};
+
+(function(){
+  var q = new URLSearchParams(window.location.search);
+  function entier(cle, defaut){
+    var v = parseInt(q.get(cle), 10);
+    return isNaN(v) ? defaut : Math.max(0, v);
+  }
+  var d = entier("d", 0), p = entier("p", 0), a = entier("a", 0), c = entier("c", 0);
+  var ville = q.get("v") || "";
+  var r1 = entier("r1", -1), r2 = entier("r2", -1);   // 0..3 = niveau de relance / reponse
+
+  if (!d || !p){
+    document.getElementById("vide").style.display = "block";
+    return;
+  }
+  document.getElementById("contenu").style.display = "block";
+
+  var relance = r1 >= 0 ? Math.min(3, r1) : 1;
+  var reponse = r2 >= 0 ? Math.min(3, r2) : 1;
+  var fR = (3 - relance) / 3, fA = (3 - reponse) / 3;
+
+  var devisNonSignes = d * 12 * E.DEVIS_NON_SIGNE;
+  var recuperable = devisNonSignes * E.RECUP_RELANCE * p * fR;
+  var appelsManques = a * E.SEMAINES * 12 * E.APPEL_NON_RAPPEL;
+  var appels = appelsManques * fA;
+  var manque = Math.max(0, E.OBJECTIF_CONTRATS - c);
+  var recurrent = manque * E.CONTRAT_MENSUEL * 12;
+  var ca = d * 12 * E.CONV_DEVIS * p;
+
+  document.getElementById("etq").textContent =
+    "Votre rapport" + (ville ? " \u00B7 " + ville : "");
+  document.getElementById("r_recup").textContent = euros(Math.round(recuperable));
+  document.getElementById("r_appels").textContent = nombre(Math.round(appels));
+  document.getElementById("r_recurrent").textContent = euros(Math.round(recurrent));
+
+  var part = ca > 0 ? recuperable / ca : 0;
+  var resume;
+  if (recuperable === 0 && appels === 0){
+    resume = "Votre organisation tient déjà : vos devis sont suivis et vos appels sont pris. " +
+             "Le seul terrain qui reste ouvert, c'est le portefeuille d'entretien — et c'est " +
+             "lui qui porte une année sereine.";
+  } else if (part < 0.05){
+    resume = "Votre fuite est réelle sans être grave. C'est le genre d'écart qui ne se voit pas " +
+             "en mars, et qui se remarque en décembre quand les chantiers se sont raréfiés.";
+  } else if (part < 0.11){
+    resume = "Le problème n'est pas votre travail. C'est qu'entre le devis envoyé et le client " +
+             "qui signe, il n'y a personne — et pendant ce temps, vous êtes sur un chantier.";
+  } else {
+    resume = "À ce niveau, ce n'est plus un détail d'organisation : c'est un manque à gagner " +
+             "qui se répète chaque mois, et qui pèse plus lourd que beaucoup de vos charges.";
+  }
+  document.getElementById("resume").textContent = resume;
+
+  // le détail du calcul
+  var f = function(x){ return (Math.round(x*100)/100).toString().replace(".", ","); };
+  document.getElementById("detail-calcul").innerHTML =
+"<b>① Devis non relancés</b>\n" +
+"   " + d + " devis/mois \u00D7 12 = " + (d*12) + " devis/an\n" +
+"   dont " + f(E.DEVIS_NON_SIGNE*100) + " % non signés = " + Math.round(devisNonSignes) + " devis\n" +
+"   \u00D7 " + f(E.RECUP_RELANCE*100) + " % récupérables \u00D7 " + euros(p) +
+    " \u00D7 coefficient " + f(fR) + "\n" +
+"   = <b>" + euros(Math.round(recuperable)) + "</b>\n\n" +
+"<b>② Appels non repris</b>\n" +
+"   " + a + " appels manqués/semaine \u00D7 4,3 \u00D7 12 = " + Math.round(a*E.SEMAINES*12) + " appels/an\n" +
+"   dont " + f(E.APPEL_NON_RAPPEL*100) + " % jamais rappelés \u00D7 coefficient " + f(fA) + "\n" +
+"   = <b>" + Math.round(appels) + " appels à reprendre</b>\n\n" +
+"<b>③ Récurrent d'entretien</b>\n" +
+"   objectif " + E.OBJECTIF_CONTRATS + " contrats \u2212 " + c + " déjà en place = " + manque + " à construire\n" +
+"   \u00D7 " + euros(E.CONTRAT_MENSUEL) + "/mois \u00D7 12\n" +
+"   = <b>" + euros(Math.round(recurrent)) + "</b>\n\n" +
+"<b>CA annuel estimé</b> (pour situer) : " + euros(Math.round(ca)) + "\n" +
+"   la ligne ① représente " + (part*100).toFixed(1).replace(".", ",") + " % de ce CA.";
+
+  document.getElementById("gain1").textContent = euros(Math.round(recuperable)) + " par an";
+  document.getElementById("gain2").textContent = Math.round(appels) + " appels sur l'année";
+  document.getElementById("gain3").textContent = euros(Math.round(recurrent)) + " récurrent";
+
+  var L1 = ["Rien \u2014 je passe au suivant","J'y pense, mais pas le temps",
+            "Je rappelle une fois, puis j'oublie","Relance automatique à date fixe"];
+  var L2 = ["Je ne décroche pas","Je rappelle le soir","SMS quand j'y pense",
+            "Prise en charge immédiate"];
+  var lignes = [
+    ["Devis envoyés par mois", nombre(d)],
+    ["Panier moyen", euros(p)],
+    ["Appels manqués par semaine", nombre(a)],
+    ["Contrats d'entretien en cours", nombre(c)],
+    ["Quand un devis reste sans réponse", L1[relance]],
+    ["Quand le téléphone sonne", L2[reponse]]
+  ];
+  document.getElementById("rappel").innerHTML = lignes.map(function(x){
+    return "<div class='ligne'><div class='g'><span class='lib'>" + x[0] +
+           "</span></div><span class='ch neutre' style='font-size:18px'>" + x[1] + "</span></div>";
+  }).join("");
+})();
+</script>
+</body>
+</html>

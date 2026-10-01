@@ -710,6 +710,21 @@ function envoyer(ev){
       accuse.className = "accuse ok";
       accuse.textContent = "C'est noté — " + e + ". Vous recevez le détail à cette adresse.";
       document.querySelector(".champs").style.display = "none";
+      // on affiche aussi le rapport complet, tout de suite, sans attendre l'email
+      var q = new URLSearchParams(window.location.search);
+      var params = new URLSearchParams();
+      params.set("d", document.getElementById("devis").value);
+      params.set("p", document.getElementById("panier").value);
+      params.set("a", document.getElementById("appels").value);
+      params.set("c", document.getElementById("contrats").value);
+      params.set("r1", reponses.q1);
+      params.set("r2", reponses.q2);
+      var v = q.get("v"); if (v) params.set("v", v);
+      var lien = document.createElement("p");
+      lien.style.marginTop = "18px";
+      lien.innerHTML = "<a href='rapport.html?" + params.toString() +
+        "' class='bouton' style='display:inline-block;text-decoration:none'>Voir le rapport complet →</a>";
+      document.querySelector(".capture").appendChild(lien);
     })
     .catch(function(){
       accuse.className = "accuse ko";
