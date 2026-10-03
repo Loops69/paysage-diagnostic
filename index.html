@@ -707,6 +707,17 @@ function envoyer(ev){
   fetch("https://formsubmit.co/ajax/nj.secure69@gmail.com", {method:"POST", body:donnees})
     .then(function(r){ return r.json(); })
     .then(function(){
+      // ⭐ reponse immediate au prospect, via n8n + Brevo
+      // le prospect recoit SES chiffres dans l'heure, sans attendre
+      try {
+        var versN8n = new URLSearchParams();
+        donnees.forEach(function(v, k){ versN8n.append(k, v); });
+        fetch("https://n8n-y6hn.srv2008397.hstgr.cloud/webhook/paysage/diagnostic", {
+          method: "POST",
+          headers: {"Content-Type": "application/x-www-form-urlencoded"},
+          body: versN8n.toString()
+        }).catch(function(){});
+      } catch(e){}
       accuse.className = "accuse ok";
       accuse.textContent = "C'est noté — " + e + ". Vous recevez le détail à cette adresse.";
       document.querySelector(".champs").style.display = "none";
