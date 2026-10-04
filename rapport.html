@@ -8,12 +8,13 @@
 <meta name="description" content="Le détail de votre diagnostic : le calcul ligne par ligne, et les 4 points à corriger dans l'ordre.">
 <style>
   :root{
-    --bleu:#4F7CFF; --bleu-fonce:#3A61D9; --bleu-pale:#EEF3FF; --bleu-bord:#D6E0FF;
-    --encre:#0B1220; --encre-doux:#1E293B; --gris:#5B6478; --gris-2:#8A93A6;
-    --fond:#FFF; --fond-2:#F7F9FD; --bord:#E5EAF3;
+    /* Palette du mail « Diagnostic paysage » (vert sobre) */
+    --bleu:#3B6E52; --bleu-fonce:#2D5540; --bleu-pale:#EEF4EF; --bleu-bord:#D8E5DC;
+    --encre:#1E2822; --encre-doux:#2C3831; --gris:#4A5850; --gris-2:#7C8A81;
+    --fond:#FFF; --fond-2:#F4F6F4; --bord:#E1E7E2;
     --or:#E8734A; --or-pale:#FFF4EF; --vert:#12A05C; --vert-pale:#EAF7F1;
-    --r:16px; --r-s:11px;
-    --ombre:0 1px 2px rgba(11,18,32,.04), 0 8px 24px rgba(11,18,32,.06);
+    --r:8px; --r-s:5px;
+    --ombre:0 1px 2px rgba(30,40,34,.04), 0 8px 24px rgba(30,40,34,.06);
   }
   *{box-sizing:border-box;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -78,13 +79,13 @@
 
   .encart{background:var(--encre);border-radius:var(--r);padding:34px;color:#fff}
   .encart h3{color:#fff;font-size:21px;margin-bottom:12px}
-  .encart p{color:#94A3B8;font-size:15.5px;max-width:54ch}
+  .encart p{color:#94A3A0;font-size:15.5px;max-width:54ch}
   .encart p+p{margin-top:12px}
   .encart strong{color:#fff}
   .encart .bouton{display:inline-block;background:var(--bleu);color:#fff;border:0;
     border-radius:var(--r-s);padding:16px 28px;font:inherit;font-weight:800;font-size:16px;
     cursor:pointer;text-decoration:none;margin-top:22px;
-    box-shadow:0 6px 18px rgba(79,124,255,.30)}
+    box-shadow:0 6px 18px rgba(59,110,82,.30)}
   .encart .bouton:hover{background:var(--bleu-fonce)}
 
   .hypo{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);padding:22px 24px}
