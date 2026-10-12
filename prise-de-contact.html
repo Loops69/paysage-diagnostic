@@ -498,11 +498,14 @@ document.getElementById('formulaire').onsubmit = function(ev){
   function reussi(){
     abouti = true;
     accuse.className = 'accuse ok';
-    accuse.innerHTML = "C'est noté, " + valeur('nom').split(' ')[0] +
-      ". Je vous appelle le <strong>" + e.tete + ' ' + e.sous + ' à ' + choisiHeure +
-      "</strong>. Vous recevez un email de confirmation.";
+    accuse.textContent = 'C\'est noté. Un instant…';
     document.getElementById('bouton').style.display = 'none';
     document.querySelectorAll('.grille input, .jour, .heure').forEach(function(x){ x.disabled = true; });
+    // on emmène le prospect sur la page de confirmation, créneau compris
+    setTimeout(function(){
+      window.location.href = 'rendez-vous-confirme.html?jour=' +
+        encodeURIComponent(e.tete + ' ' + e.sous) + '&heure=' + encodeURIComponent(choisiHeure);
+    }, 500);
   }
   function rate(){
     if (abouti) return;
