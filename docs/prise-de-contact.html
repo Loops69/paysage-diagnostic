@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="fr" class="nojs">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Regain — prenons rendez-vous</title>
+<meta name="description" content="Dix entreprises du paysage. Dites-moi qui vous êtes, choisissez un créneau, je vous appelle.">
+<style>
+:root{
+    /* Palette du mail « Diagnostic paysage » (vert sobre) */
+    --bleu:#3B6E52; --bleu-fonce:#2D5540; --bleu-pale:#EEF4EF; --bleu-bord:#D8E5DC;
+    --encre:#1E2822; --encre-doux:#2C3831; --gris:#4A5850; --gris-2:#7C8A81;
+    --fond:#FFFFFF; --fond-2:#F4F6F4; --bord:#E1E7E2;
+    --or:#E8734A; --or-pale:#FFF4EF; --vert:#12A05C; --vert-pale:#EAF7F1;
+    --r:8px; --r-s:5px;
+    --ombre:0 1px 2px rgba(30,40,34,.04), 0 8px 24px rgba(30,40,34,.06);
+    --ombre-fort:0 2px 4px rgba(30,40,34,.04), 0 18px 48px rgba(30,40,34,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--fond);color:var(--encre);
+    font-family:Manrope,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+    font-size:16px;line-height:1.62;-webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .enveloppe{max-width:820px;margin:0 auto;padding:0 24px}
+
+  .entete{position:sticky;top:0;z-index:50;background:rgba(255,255,255,.88);
+    backdrop-filter:saturate(180%) blur(14px);border-bottom:1px solid var(--bord)}
+  .entete-in{max-width:820px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;gap:10px}
+  .point{width:10px;height:10px;border-radius:50%;background:var(--bleu);
+    box-shadow:0 0 0 4px var(--bleu-pale);flex:0 0 auto}
+  .marque-nom{font-weight:800;letter-spacing:1.5px;font-size:11.5px;text-transform:uppercase;color:var(--bleu)}
+  .marque-droite{margin-left:auto;font-size:13px;color:var(--gris-2);font-weight:600}
+
+  .hero{padding:74px 0 54px;position:relative;overflow:hidden}
+  .hero:before{content:"";position:absolute;inset:-40% 30% auto -20%;height:520px;
+    background:radial-gradient(ellipse at center, rgba(59,110,82,.10), transparent 68%);
+    pointer-events:none}
+  .etiquette{display:inline-flex;align-items:center;gap:8px;background:var(--bleu-pale);
+    border:1px solid var(--bleu-bord);color:var(--bleu-fonce);border-radius:100px;
+    padding:7px 15px;font-size:13px;font-weight:700;letter-spacing:.01em;margin-bottom:26px}
+  h1{font-size:clamp(32px,6.2vw,52px);line-height:1.08;letter-spacing:-.035em;
+    font-weight:800;margin-bottom:22px;max-width:15ch}
+  h1 em{font-style:normal;color:var(--bleu)}
+  .chapeau{font-size:clamp(17px,2.3vw,19.5px);color:var(--gris);max-width:56ch;margin-bottom:34px}
+  .rangee-boutons{display:flex;gap:14px;flex-wrap:wrap;align-items:center}
+
+  .bouton{background:var(--bleu);color:#fff;border:0;border-radius:var(--r-s);
+    padding:16px 30px;font:inherit;font-weight:800;font-size:16px;cursor:pointer;
+    transition:transform .12s ease, background .15s ease, box-shadow .15s ease;
+    box-shadow:0 6px 18px rgba(59,110,82,.30);white-space:nowrap}
+  .bouton:hover{background:var(--bleu-fonce);transform:translateY(-1px);
+    box-shadow:0 10px 26px rgba(59,110,82,.36)}
+  .bouton:active{transform:translateY(0)}
+  .bouton[disabled]{background:#C6D2C9;box-shadow:none;cursor:not-allowed;transform:none}
+  .bouton-clair{background:#fff;color:var(--encre);border:1.5px solid var(--bord);box-shadow:none}
+  .bouton-clair:hover{background:var(--fond-2);border-color:#CFDCD3;box-shadow:none}
+  .bouton-lien{background:none;border:0;color:var(--gris);font:inherit;font-size:14px;
+    font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;padding:8px 0}
+  .bouton-lien:hover{color:var(--bleu)}
+
+  .carte{background:#fff;border:1px solid var(--bord);border-radius:var(--r);padding:26px;
+    box-shadow:var(--ombre)}
+  .carte-2{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);padding:26px}
+
+  .pre-rempli{display:flex;gap:14px;align-items:flex-start;background:var(--bleu-pale);
+    border:1px solid var(--bleu-bord);border-radius:var(--r);padding:18px 20px;margin-bottom:26px}
+  #zone-pre-rempli-hero .pre-rempli{margin:0 0 30px;max-width:60ch}
+  .pre-rempli .icone{flex:0 0 auto;width:22px;height:22px;border-radius:50%;background:var(--bleu);
+    color:#fff;display:flex;align-items:center;justify-content:center;font-size:13px;
+    font-weight:800;margin-top:1px}
+  .pre-rempli p{font-size:14.5px;color:var(--encre-doux);margin:0}
+  .pre-rempli strong{color:var(--encre)}
+
+  .preuves{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+    gap:16px;margin:44px 0 0}
+  .preuve{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);padding:22px}
+  .preuve .gros{font-size:30px;font-weight:800;letter-spacing:-.03em;line-height:1;
+    color:var(--bleu);margin-bottom:8px;font-variant-numeric:tabular-nums}
+  .preuve .dit{font-size:14px;color:var(--gris);line-height:1.5}
+  .preuve .src{font-size:11.5px;color:var(--gris-2);margin-top:9px;font-weight:600}
+
+  section{padding:64px 0}
+  .sep{height:1px;background:var(--bord);margin:0}
+  h2{font-size:clamp(24px,3.6vw,33px);line-height:1.16;letter-spacing:-.028em;
+    font-weight:800;margin-bottom:16px}
+  h3{font-size:19px;letter-spacing:-.02em;font-weight:800;margin-bottom:12px}
+  h4{font-size:16px;font-weight:800;margin-bottom:8px}
+  .intro-section{font-size:17.5px;color:var(--gris);max-width:60ch;margin-bottom:34px}
+  p+p{margin-top:14px}
+
+  .dossier{background:#fff;border:1px solid var(--bord);border-radius:var(--r);
+    overflow:hidden;box-shadow:var(--ombre-fort);margin:30px 0}
+  .dossier-tete{background:var(--encre);color:#fff;padding:20px 26px;
+    display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap}
+  .dossier-tete .ref{font-weight:800;letter-spacing:-.01em;font-size:16px}
+  .dossier-tete .montant{font-weight:800;font-size:22px;letter-spacing:-.02em;
+    color:#fff;font-variant-numeric:tabular-nums}
+  .dossier-tete .sous{font-size:12.5px;color:#94A3A0;font-weight:600;display:block;margin-top:2px;
+    letter-spacing:.02em;text-transform:uppercase}
+  .trace{padding:8px 26px 22px}
+  .etape{display:grid;grid-template-columns:96px 26px 1fr;gap:0;position:relative;padding:15px 0}
+  .etape .date{font-size:13px;font-weight:800;color:var(--gris);padding-top:1px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+  .etape .rail{position:relative;display:flex;justify-content:center}
+  .etape .rail:before{content:"";position:absolute;top:22px;bottom:-15px;width:2px;background:var(--bord)}
+  .etape:last-child .rail:before{display:none}
+  .etape .puce{width:26px;height:26px;border-radius:50%;background:#fff;border:2px solid var(--bord);
+    display:flex;align-items:center;justify-content:center;font-size:12px;position:relative;
+    z-index:1;flex:0 0 auto}
+  .etape.fait .puce{background:var(--vert-pale);border-color:var(--vert);color:var(--vert);font-weight:800}
+  .etape.cle .puce{background:var(--bleu);border-color:var(--bleu);color:#fff;font-weight:800}
+  .etape.attente .puce{background:var(--or-pale);border-color:var(--or);color:var(--or);font-weight:800}
+  .etape .quoi{font-size:15px;font-weight:700;color:var(--encre);line-height:1.45}
+  .etape .detail{font-size:13.5px;color:var(--gris);margin-top:3px;line-height:1.5}
+  .etape.cle .quoi{color:var(--bleu-fonce)}
+  .dossier-pied{background:var(--fond-2);border-top:1px solid var(--bord);padding:20px 26px;
+    font-size:14.5px;color:var(--encre-doux)}
+  .dossier-pied strong{color:var(--encre)}
+
+  .bloc-question{margin-bottom:34px}
+  .bloc-question .intitule{font-weight:700;font-size:16.5px;margin-bottom:5px;
+    display:flex;align-items:baseline;gap:9px}
+  .bloc-question .num{font-size:12.5px;font-weight:800;color:var(--bleu);
+    background:var(--bleu-pale);border-radius:6px;padding:2px 8px;flex:0 0 auto}
+  .bloc-question .aide{font-size:14px;color:var(--gris);margin-bottom:14px}
+  .glissiere{display:flex;align-items:center;gap:16px}
+  input[type=range]{flex:1;-webkit-appearance:none;appearance:none;height:6px;border-radius:6px;
+    background:var(--bord);outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:24px;height:24px;
+    border-radius:50%;background:var(--bleu);border:3px solid #fff;
+    box-shadow:0 2px 8px rgba(59,110,82,.4);cursor:grab;transition:transform .12s}
+  input[type=range]::-webkit-slider-thumb:active{cursor:grabbing;transform:scale(1.12)}
+  input[type=range]::-moz-range-thumb{width:20px;height:20px;border-radius:50%;
+    background:var(--bleu);border:3px solid #fff;box-shadow:0 2px 8px rgba(59,110,82,.4);cursor:grab}
+  .valeur{min-width:132px;text-align:right;font-weight:800;font-size:19px;
+    font-variant-numeric:tabular-nums;letter-spacing:-.02em;color:var(--encre)}
+
+  .choix{display:flex;flex-direction:column;gap:9px}
+  .choix button{text-align:left;background:#fff;border:1.5px solid var(--bord);
+    border-radius:var(--r-s);padding:15px 18px;font:inherit;font-size:15px;cursor:pointer;
+    transition:.14s;display:flex;align-items:flex-start;gap:12px;line-height:1.45}
+  .choix button:hover{border-color:var(--bleu);background:var(--bleu-pale)}
+  .choix button .case{flex:0 0 auto;width:19px;height:19px;border-radius:50%;
+    border:2px solid var(--bord);margin-top:1px;transition:.14s}
+  .choix button.actif{border-color:var(--bleu);background:var(--bleu-pale);font-weight:700;
+    box-shadow:0 0 0 3px rgba(59,110,82,.10)}
+  .choix button.actif .case{border-color:var(--bleu);background:var(--bleu);
+    box-shadow:inset 0 0 0 4px #fff}
+
+  .barre{position:fixed;left:0;right:0;bottom:0;z-index:60;
+    background:rgba(255,255,255,.94);backdrop-filter:saturate(180%) blur(14px);
+    border-top:1px solid var(--bord);padding:14px 24px;display:none;
+    box-shadow:0 -6px 24px rgba(30,40,34,.05)}
+  .barre.visible{display:block}
+  .barre-in{max-width:820px;margin:0 auto;display:flex;align-items:center;gap:18px}
+  .progres{flex:1;height:5px;background:var(--bord);border-radius:6px;overflow:hidden}
+  .progres span{display:block;height:100%;width:0;background:var(--bleu);
+    border-radius:6px;transition:width .3s ease}
+  .barre .compte{font-size:13px;font-weight:700;color:var(--gris);
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+
+  .verdict{border-radius:var(--r);padding:30px;margin-bottom:34px;border:1px solid var(--bord);
+    background:var(--fond-2);position:relative;overflow:hidden}
+  .verdict:before{content:"";position:absolute;left:0;top:0;bottom:0;width:5px;background:var(--bleu)}
+  .verdict.v-or:before{background:var(--or)} .verdict.v-vert:before{background:var(--vert)}
+  .verdict .tete{font-size:12.5px;font-weight:800;letter-spacing:.06em;text-transform:uppercase;
+    color:var(--gris-2);margin-bottom:8px}
+  .verdict h3{font-size:clamp(22px,3.4vw,29px);letter-spacing:-.03em;margin-bottom:10px}
+  .verdict p{color:var(--encre-doux);font-size:16.5px;max-width:54ch}
+
+  .montants{background:#fff;border:1px solid var(--bord);border-radius:var(--r);
+    overflow:hidden;box-shadow:var(--ombre);margin-bottom:14px}
+  .ligne{display:flex;justify-content:space-between;align-items:center;gap:20px;
+    padding:22px 26px;border-bottom:1px solid var(--bord)}
+  .ligne:last-child{border-bottom:0}
+  .ligne .gauche{display:flex;flex-direction:column;gap:3px}
+  .ligne .libelle{font-size:15.5px;font-weight:700;color:var(--encre)}
+  .ligne .explication{font-size:13.5px;color:var(--gris)}
+  .ligne .chiffre{font-weight:800;font-size:27px;letter-spacing:-.03em;
+    font-variant-numeric:tabular-nums;white-space:nowrap}
+  .ligne.principal{background:var(--or-pale)}
+  .chiffre.or{color:var(--or)} .chiffre.bleu{color:var(--bleu)} .chiffre.neutre{color:var(--gris)}
+
+  .avert{font-size:13.5px;color:var(--gris);line-height:1.55}
+
+  .hypotheses{background:var(--fond-2);border:1px solid var(--bord);border-radius:var(--r);
+    padding:24px 26px;margin-top:6px}
+  .hypotheses ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .hypotheses li{font-size:14.5px;color:var(--encre-doux);padding-left:22px;position:relative}
+  .hypotheses li:before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;
+    border-radius:50%;background:var(--bleu)}
+  .hypotheses li strong{font-weight:800;color:var(--encre)}
+
+  .capture{background:var(--encre);border-radius:var(--r);padding:34px;color:#fff}
+  .capture h3{color:#fff;font-size:22px;margin-bottom:10px}
+  .capture .sous{color:#94A3A0;font-size:15.5px;margin-bottom:22px;max-width:50ch}
+  .champs{display:flex;gap:10px;flex-wrap:wrap}
+  .champs input{flex:1;min-width:230px;padding:16px 18px;border-radius:var(--r-s);
+    border:1.5px solid #33413A;background:#1E2822;color:#fff;font:inherit;font-size:15.5px}
+  .champs input::placeholder{color:#64756B}
+  .champs input:focus{outline:0;border-color:var(--bleu);background:#121A15}
+  .accuse{margin-top:16px;font-size:14.5px;color:#94A3A0}
+  .accuse.ok{color:#4ADE80;font-weight:600}
+  .accuse.ko{color:#FCA5A5}
+
+  footer{border-top:1px solid var(--bord);padding:38px 0 56px;background:var(--fond-2)}
+  footer p{font-size:13.5px;color:var(--gris-2);max-width:66ch}
+  footer p+p{margin-top:9px}
+  footer strong{color:var(--gris)}
+
+  .non-js{display:none}
+  .nojs .js-only{display:none}
+  .nojs .non-js{display:block}
+
+  @media(max-width:640px){
+    .hero{padding:52px 0 40px}
+    section{padding:48px 0}
+    .carte,.carte-2,.verdict{padding:22px}
+    .ligne{padding:18px 20px;flex-direction:column;align-items:flex-start;gap:8px}
+    .ligne .chiffre{font-size:32px}
+    .valeur{min-width:96px;font-size:17px}
+    .etape{grid-template-columns:74px 24px 1fr}
+    .etape .date{font-size:12px}
+    .trace{padding:4px 18px 18px}
+    .dossier-tete{padding:16px 20px}
+    .dossier-pied{padding:16px 20px}
+    .barre-in{gap:12px}
+    .capture{padding:24px}
+  }
+  /* ── Page de prise de contact ─────────────────────────────────────── */
+  .hero h1{max-width:22ch}
+  .hero{padding:56px 0 40px}
+  .grille{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));
+    gap:16px;margin:20px 0 8px}
+  .grille label{display:flex;flex-direction:column;gap:7px;font-size:13px;
+    font-weight:700;color:var(--encre-doux)}
+  .grille .oblig{color:var(--or);font-weight:800}
+  .grille input{border:1.5px solid var(--bord);border-radius:var(--r-s);
+    padding:13px 14px;font:inherit;font-size:15px;color:var(--encre);
+    background:#fff;transition:border-color .15s ease, box-shadow .15s ease}
+  .grille input:focus{outline:0;border-color:var(--bleu);
+    box-shadow:0 0 0 3px var(--bleu-pale)}
+
+  .jours,.heures{display:grid;gap:10px;margin:18px 0 0}
+  .jours{grid-template-columns:repeat(auto-fit,minmax(112px,1fr))}
+  .heures{grid-template-columns:repeat(auto-fit,minmax(96px,1fr))}
+  .jour,.heure{background:#fff;border:1.5px solid var(--bord);border-radius:var(--r-s);
+    padding:13px 8px;font:inherit;font-size:14px;font-weight:700;color:var(--encre-doux);
+    cursor:pointer;text-align:center;line-height:1.3;
+    transition:border-color .13s ease, background .13s ease, color .13s ease}
+  .jour small{display:block;font-size:11.5px;font-weight:600;color:var(--gris-2);margin-top:3px}
+  .jour:hover,.heure:hover{border-color:#CFDCD3;background:var(--fond-2)}
+  .jour.actif,.heure.actif{background:var(--bleu);border-color:var(--bleu);color:#fff}
+  .jour.actif small{color:rgba(255,255,255,.82)}
+
+  /* un créneau déjà pris : gris, barré, impossible à choisir */
+  .heure.pris{background:#F1F3F1;border-color:#E4E9E5;color:#A9B4AD;
+    cursor:not-allowed;text-decoration:line-through;text-decoration-thickness:1.5px}
+  .heure.pris:hover{background:#F1F3F1;border-color:#E4E9E5}
+  .heure.pris small{display:block;font-size:10.5px;font-weight:700;
+    text-decoration:none;letter-spacing:.3px;text-transform:uppercase;margin-top:2px}
+  .legende{display:flex;gap:16px;flex-wrap:wrap;margin-top:14px;font-size:12.5px;
+    color:var(--gris-2);font-weight:600}
+  .legende span{display:inline-flex;align-items:center;gap:7px}
+  .legende i{width:13px;height:13px;border-radius:3px;border:1.5px solid var(--bord);
+    background:#fff;display:inline-block}
+  .legende i.pris{background:#F1F3F1;border-color:#E4E9E5}
+
+  .regle{margin:22px 0 0;background:var(--or-pale);border:1px solid #F3D8CA;
+    border-left:3px solid var(--or);border-radius:0 var(--r-s) var(--r-s) 0;
+    padding:15px 17px;font-size:14px;line-height:1.55;color:var(--encre-doux)}
+  .regle strong{color:var(--encre)}
+
+  .choisi{margin:20px 0 0;background:var(--bleu-pale);border:1px solid var(--bleu-bord);
+    border-radius:var(--r-s);padding:14px 16px;font-size:14.5px;color:var(--encre-doux)}
+  .choisi strong{color:var(--encre)}
+  .accuse{margin-top:16px;font-size:14.5px;font-weight:600;color:var(--gris)}
+  .accuse.ok{color:#0E7A46}
+  .accuse.ko{color:#C0532B}
+  .non-js{background:var(--or-pale);border:1px solid #F3D8CA;border-radius:var(--r);
+    padding:20px 22px;font-size:14.5px;color:var(--encre-doux);margin-bottom:26px}
+
+</style>
+</head>
+<body>
+
+<div class="entete"><div class="entete-in">
+  <span class="point"></span><span class="marque-nom">Regain</span>
+  <span class="marque-droite">Prise de contact</span>
+</div></div>
+
+<div class="hero"><div class="enveloppe">
+  <div class="etiquette">Dix entreprises du paysage, pas une de plus</div>
+  <h1>Prenons rendez-vous</h1>
+  <p class="chapeau">
+    Vous &ecirc;tes int&eacute;ress&eacute; par Regain. Dites-moi qui vous &ecirc;tes, choisissez un cr&eacute;neau,
+    <strong>et je vous appelle.</strong> Un quart d'heure suffit pour vous montrer ce que &ccedil;a donne
+    sur vos dossiers.
+  </p>
+</div></div>
+
+<div class="enveloppe" style="padding-bottom:70px">
+
+  <div class="non-js">
+    <strong>Pour choisir un cr&eacute;neau, Javascript doit &ecirc;tre activ&eacute;.</strong><br>
+    Sinon, &eacute;crivez-moi : <a href="mailto:contact@envoi.nj-secure.fr?subject=Regain" style="color:var(--bleu);font-weight:700">contact@envoi.nj-secure.fr</a>
+  </div>
+
+  <form class="carte js-only" id="formulaire" novalidate>
+    <h3>Vos coordonn&eacute;es</h3>
+    <p style="font-size:14px;color:var(--gris);margin-bottom:4px">
+      <span class="oblig">*</span> champs n&eacute;cessaires pour vous rappeler.
+    </p>
+
+    <div class="grille">
+      <label for="nom"><span>Nom et pr&eacute;nom <span class="oblig">*</span></span>
+        <input id="nom" name="nom" autocomplete="name" placeholder="Jean Martin" required></label>
+      <label for="entreprise"><span>Entreprise <span class="oblig">*</span></span>
+        <input id="entreprise" name="entreprise" placeholder="Paysages du Sud" required></label>
+      <label for="telephone"><span>T&eacute;l&eacute;phone <span class="oblig">*</span></span>
+        <input id="telephone" name="telephone" type="tel" autocomplete="tel" placeholder="06 12 34 56 78" required></label>
+      <label for="email"><span>Email <span class="oblig">*</span></span>
+        <input id="email" name="email" type="email" autocomplete="email" placeholder="contact@monentreprise.fr" required></label>
+      <label for="ville"><span>Ville</span>
+        <input id="ville" name="ville" placeholder="Toulon"></label>
+      <label for="metier"><span>M&eacute;tier</span>
+        <input id="metier" name="metier" placeholder="Entretien, cr&eacute;ation, &eacute;lagage&hellip;"></label>
+    </div>
+
+    <h3 style="margin-top:34px">Votre cr&eacute;neau</h3>
+    <p style="font-size:14px;color:var(--gris)">Choisissez le jour, puis l'heure qui vous arrange.</p>
+
+    <div class="jours" id="jours"></div>
+    <div class="heures" id="heures"></div>
+
+    <div class="legende">
+      <span><i></i> disponible</span>
+      <span><i class="pris"></i> d&eacute;j&agrave; pris</span>
+    </div>
+
+    <div class="regle">
+      <strong>Une seule r&egrave;gle : soyez joignable.</strong>
+      Si l'appel du cr&eacute;neau choisi n'est pas honor&eacute;, la place passe &agrave; l'entreprise suivante.
+      Il n'y a que dix places, et je ne les garde pas.
+    </div>
+
+    <div class="choisi" id="choisi" hidden></div>
+
+    <div style="margin-top:26px">
+      <button class="bouton" type="submit" id="bouton">R&eacute;server mon appel</button>
+    </div>
+    <p class="accuse" id="accuse"></p>
+  </form>
+
+</div>
+
+<script>
+document.documentElement.classList.remove('nojs');
+
+/* ══════════════════════════════════════════════════════════════════════════
+   LES CRÉNEAUX — c'est le seul endroit à toucher.
+   ══════════════════════════════════════════════════════════════════════════ */
+var QUAND = {
+  premierJourDans: 1,                            // 1 = on commence demain
+  nombreDeJours: 5,                              // combien de jours ouvrés proposés
+  heures: ['09:00', '10:30', '14:00', '15:30'],  // tous les créneaux de la journée
+
+  // Les créneaux DÉJÀ PRIS, écrits "jour:heure" — les indices commencent à 0.
+  // « 0:1 » = premier jour proposé, deuxième créneau. Ceux-là sont grisés.
+  pris: ['0:1', '0:3', '1:0', '1:2', '2:1', '3:0', '3:3', '4:2'],
+
+  // Où part la fiche. Le webhook n8n renvoie une confirmation au prospect
+  // ET prévient par email ; formsubmit double la notification.
+  webhook: 'https://n8n-y6hn.srv2008397.hstgr.cloud/webhook/paysage/contact',
+  secours: 'nj.secure69@gmail.com'
+};
+
+var JOURS = ['dimanche','lundi','mardi','mercredi','jeudi','vendredi','samedi'];
+var MOIS  = ['janvier','février','mars','avril','mai','juin','juillet',
+             'août','septembre','octobre','novembre','décembre'];
+var choisiJour = null, choisiHeure = null, joursProposes = [];
+
+function joursOuvrables(debut, combien){
+  var out = [], d = new Date(); d.setHours(0,0,0,0); d.setDate(d.getDate() + debut);
+  while (out.length < combien){
+    if (d.getDay() !== 0 && d.getDay() !== 6) out.push(new Date(d));
+    d.setDate(d.getDate() + 1);
+  }
+  return out;
+}
+
+function etiquette(d){
+  var j = JOURS[d.getDay()];
+  return { tete: j.charAt(0).toUpperCase() + j.slice(1),
+           sous: d.getDate() + ' ' + MOIS[d.getMonth()] };
+}
+
+function estPris(iJour, iHeure){ return QUAND.pris.indexOf(iJour + ':' + iHeure) !== -1; }
+
+function dessinerJours(){
+  var h = document.getElementById('jours');
+  h.innerHTML = '';
+  joursProposes.forEach(function(d, idx){
+    var e = etiquette(d);
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'jour';
+    b.innerHTML = e.tete + '<small>' + e.sous + '</small>';
+    b.onclick = function(){
+      choisiJour = d; choisiHeure = null;
+      [].forEach.call(h.children, function(x){ x.classList.remove('actif'); });
+      b.classList.add('actif');
+      dessinerHeures(idx); majChoix();
+    };
+    h.appendChild(b);
+  });
+}
+
+function dessinerHeures(iJour){
+  var h = document.getElementById('heures');
+  h.innerHTML = '';
+  if (iJour === null || iJour === undefined) return;
+  QUAND.heures.forEach(function(hh, iH){
+    var b = document.createElement('button');
+    b.type = 'button';
+    if (estPris(iJour, iH)){
+      b.className = 'heure pris';
+      b.disabled = true;
+      b.innerHTML = hh + '<small>pris</small>';
+    } else {
+      b.className = 'heure'; b.textContent = hh;
+      b.onclick = function(){
+        choisiHeure = hh;
+        [].forEach.call(h.children, function(x){ x.classList.remove('actif'); });
+        b.classList.add('actif');
+        majChoix();
+      };
+    }
+    h.appendChild(b);
+  });
+}
+
+function majChoix(){
+  var z = document.getElementById('choisi');
+  if (!choisiJour || !choisiHeure){ z.hidden = true; return; }
+  var e = etiquette(choisiJour);
+  z.hidden = false;
+  z.innerHTML = 'Votre appel : <strong>' + e.tete + ' ' + e.sous + ' à ' + choisiHeure + '</strong>';
+}
+
+function valeur(id){ return (document.getElementById(id).value || '').trim(); }
+
+document.getElementById('formulaire').onsubmit = function(ev){
+  ev.preventDefault();
+  var accuse = document.getElementById('accuse');
+  accuse.className = 'accuse';
+
+  var manque = [];
+  if (!valeur('nom'))        manque.push('votre nom');
+  if (!valeur('entreprise')) manque.push('votre entreprise');
+  if (!valeur('telephone'))  manque.push('votre téléphone');
+  if (!valeur('email'))      manque.push('votre email');
+  if (!choisiJour)           manque.push('un jour');
+  if (!choisiHeure)          manque.push('une heure');
+
+  if (manque.length){
+    accuse.className = 'accuse ko';
+    accuse.textContent = 'Il manque : ' + manque.join(', ') + '.';
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(valeur('email'))){
+    accuse.className = 'accuse ko';
+    accuse.textContent = "Cette adresse email semble incomplète.";
+    return;
+  }
+
+  var e = etiquette(choisiJour);
+  var d = new FormData();
+  d.append('nom', valeur('nom'));
+  d.append('entreprise', valeur('entreprise'));
+  d.append('telephone', valeur('telephone'));
+  d.append('email', valeur('email'));
+  d.append('ville', valeur('ville'));
+  d.append('metier', valeur('metier'));
+  d.append('jour', e.tete + ' ' + e.sous);
+  d.append('heure', choisiHeure);
+  d.append('page_source', window.location.href);
+  d.append('_subject', 'Regain — nouveau rendez-vous : ' + valeur('entreprise'));
+
+  accuse.textContent = 'Envoi en cours…';
+  document.getElementById('bouton').disabled = true;
+
+  var abouti = false;
+  function reussi(){
+    abouti = true;
+    accuse.className = 'accuse ok';
+    accuse.innerHTML = "C'est noté, " + valeur('nom').split(' ')[0] +
+      ". Je vous appelle le <strong>" + e.tete + ' ' + e.sous + ' à ' + choisiHeure +
+      "</strong>. Vous recevez un email de confirmation.";
+    document.getElementById('bouton').style.display = 'none';
+    document.querySelectorAll('.grille input, .jour, .heure').forEach(function(x){ x.disabled = true; });
+  }
+  function rate(){
+    if (abouti) return;
+    accuse.className = 'accuse ko';
+    accuse.textContent = "Ça n'est pas passé. Réessayez, ou écrivez-moi à contact@envoi.nj-secure.fr.";
+    document.getElementById('bouton').disabled = false;
+  }
+  setTimeout(function(){ if (!abouti) rate(); }, 15000);
+
+  // 1. le webhook n8n : il confirme au prospect ET prévient.
+  var p = new URLSearchParams();
+  d.forEach(function(v, k){ p.append(k, String(v)); });
+  fetch(QUAND.webhook, { method:'POST',
+                         headers:{'Content-Type':'application/x-www-form-urlencoded'},
+                         body: p.toString() })
+    .then(function(r){ if (!r.ok) throw new Error('webhook ' + r.status); })
+    .then(function(){
+      // 2. formsubmit en secours, sans attendre sa réponse
+      try { fetch('https://formsubmit.co/ajax/' + QUAND.secours, { method:'POST', body:d }).catch(function(){}); } catch(err){}
+      reussi();
+    })
+    .catch(function(){
+      // le webhook est tombé : on tente formsubmit seul
+      fetch('https://formsubmit.co/ajax/' + QUAND.secours, { method:'POST', body:d })
+        .then(function(r){ return r.json(); })
+        .then(function(c){ if (!c || String(c.success) !== 'true') throw new Error('refus'); reussi(); })
+        .catch(function(){ rate(); });
+    });
+};
+
+joursProposes = joursOuvrables(QUAND.premierJourDans, QUAND.nombreDeJours);
+dessinerJours();
+</script>
+
+</body>
+</html>
