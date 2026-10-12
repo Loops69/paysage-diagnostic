@@ -687,10 +687,31 @@ function voir(){
 
 function envoyer(ev){
   ev.preventDefault();
-  var e = document.getElementById("email").value;
+  var e = document.getElementById("email").value.trim();
   var accuse = document.getElementById("accuse");
+
+  // DEUX ENVOIS INDÉPENDANTS
+  // ------------------------
+  //   1. le webhook n8n — c'est lui qui répond au prospect ET qui nous prévient ;
+  //   2. formsubmit.co — il double la notification, en secours.
+  //
+  // Avant, le webhook était enfermé dans le .then() de formsubmit : si celui-ci
+  // tombait, ou était seulement bloqué par le navigateur, le prospect ne recevait
+  // JAMAIS sa réponse et personne n'était prévenu. Les deux partent maintenant
+  // chacun de leur côté.
+  var WEBHOOK = "https://n8n-y6hn.srv2008397.hstgr.cloud/webhook/paysage/diagnostic";
+  var SECOURS = "https://formsubmit.co/ajax/nj.secure69@gmail.com";
+
   accuse.className = "accuse";
   accuse.textContent = "Envoi en cours…";
+
+  // L'adresse est vérifiée ici d'abord : le webhook la refuse aussi, mais autant
+  // le dire tout de suite plutôt que d'annoncer un succès qui n'en est pas un.
+  if (!/^[^\s@]+@[^\s@]+\.[A-Za-z]{2,}$/.test(e)) {
+    accuse.className = "accuse ko";
+    accuse.textContent = "Cette adresse semble incomplète. Vérifiez-la, ou écrivez-moi directement.";
+    return;
+  }
 
   var donnees = new FormData();
   donnees.append("email_du_prospect", e);
@@ -705,42 +726,64 @@ function envoyer(ev){
   donnees.append("contrats_entretien", document.getElementById("contrats").value);
   donnees.append("page_source", window.location.href);
 
-  fetch("https://formsubmit.co/ajax/nj.secure69@gmail.com", {method:"POST", body:donnees})
-    .then(function(r){ return r.json(); })
-    .then(function(){
-      // ⭐ reponse immediate au prospect, via n8n + Brevo
-      // le prospect recoit SES chiffres dans l'heure, sans attendre
-      try {
-        var versN8n = new URLSearchParams();
-        donnees.forEach(function(v, k){ versN8n.append(k, v); });
-        fetch("https://n8n-y6hn.srv2008397.hstgr.cloud/webhook/paysage/diagnostic", {
-          method: "POST",
-          headers: {"Content-Type": "application/x-www-form-urlencoded"},
-          body: versN8n.toString()
-        }).catch(function(){});
-      } catch(e){}
-      accuse.className = "accuse ok";
-      accuse.textContent = "C'est noté — " + e + ". Vous recevez le détail à cette adresse.";
-      document.querySelector(".champs").style.display = "none";
-      // on affiche aussi le rapport complet, tout de suite, sans attendre l'email
-      var q = new URLSearchParams(window.location.search);
-      var params = new URLSearchParams();
-      params.set("d", document.getElementById("devis").value);
-      params.set("p", document.getElementById("panier").value);
-      params.set("a", document.getElementById("appels").value);
-      params.set("c", document.getElementById("contrats").value);
-      params.set("r1", reponses.q1);
-      params.set("r2", reponses.q2);
-      var v = q.get("v"); if (v) params.set("v", v);
-      var lien = document.createElement("p");
-      lien.style.marginTop = "18px";
-      lien.innerHTML = "<a href='rapport.html?" + params.toString() +
-        "' class='bouton' style='display:inline-block;text-decoration:none'>Voir le rapport complet →</a>";
-      document.querySelector(".capture").appendChild(lien);
+  // On n'annonce le succès QUE quand un envoi a réellement abouti.
+  var abouti = false;
+
+  function reussi(){
+    abouti = true;
+    accuse.className = "accuse ok";
+    accuse.textContent = "C'est noté — " + e + ". Vous recevez le détail à cette adresse.";
+    document.querySelector(".champs").style.display = "none";
+    // le rapport complet, tout de suite, sans attendre l'email
+    var q = new URLSearchParams(window.location.search);
+    var params = new URLSearchParams();
+    params.set("d", document.getElementById("devis").value);
+    params.set("p", document.getElementById("panier").value);
+    params.set("a", document.getElementById("appels").value);
+    params.set("c", document.getElementById("contrats").value);
+    params.set("r1", reponses.q1);
+    params.set("r2", reponses.q2);
+    var v = q.get("v"); if (v) params.set("v", v);
+    var lien = document.createElement("p");
+    lien.style.marginTop = "18px";
+    lien.innerHTML = "<a href='rapport.html?" + params.toString() +
+      "' class='bouton' style='display:inline-block;text-decoration:none'>Voir le rapport complet →</a>";
+    document.querySelector(".capture").appendChild(lien);
+  }
+
+  function rate(){
+    if (abouti) return;
+    accuse.className = "accuse ko";
+    accuse.textContent = "L'envoi n'est pas passé. Écrivez-moi directement, je vous renvoie le détail.";
+  }
+
+  // Filet de sécurité : on ne laisse pas le prospect devant « Envoi en cours… ».
+  setTimeout(function(){ if (!abouti) rate(); }, 12000);
+
+  var versN8n = new URLSearchParams();
+  donnees.forEach(function(valeur, cle){ versN8n.append(cle, String(valeur)); });
+
+  fetch(WEBHOOK, {
+    method: "POST",
+    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    body: versN8n.toString()
+  })
+    .then(function(r){
+      if (!r.ok) throw new Error("webhook " + r.status);
+      // formsubmit en secours : on n'attend PAS sa réponse, il double la
+      // notification, il ne la conditionne pas.
+      try { fetch(SECOURS, { method:"POST", body:donnees }).catch(function(){}); } catch (err) {}
+      reussi();
     })
     .catch(function(){
-      accuse.className = "accuse ko";
-      accuse.textContent = "L'envoi n'est pas passé. Écrivez-moi directement, je vous renvoie le détail.";
+      // Le webhook est tombé : on tente formsubmit seul, et on dit la vérité.
+      fetch(SECOURS, { method:"POST", body:donnees })
+        .then(function(r){ return r.json(); })
+        .then(function(c){
+          if (!c || String(c.success) !== "true") throw new Error("secours refuse");
+          reussi();
+        })
+        .catch(function(){ rate(); });
     });
 }
 
