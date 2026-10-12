@@ -247,7 +247,8 @@
 
   .jours,.heures{display:grid;gap:10px;margin:18px 0 0}
   .jours{grid-template-columns:repeat(auto-fit,minmax(112px,1fr))}
-  .heures{grid-template-columns:repeat(auto-fit,minmax(96px,1fr))}
+  .heures{grid-template-columns:repeat(4,1fr)}
+  @media (max-width:520px){ .heures{grid-template-columns:repeat(2,1fr)} }
   .jour,.heure{background:#fff;border:1.5px solid var(--bord);border-radius:var(--r-s);
     padding:13px 8px;font:inherit;font-size:14px;font-weight:700;color:var(--encre-doux);
     cursor:pointer;text-align:center;line-height:1.3;
@@ -368,11 +369,18 @@ document.documentElement.classList.remove('nojs');
 var QUAND = {
   premierJourDans: 1,                            // 1 = on commence demain
   nombreDeJours: 5,                              // combien de jours ouvrés proposés
-  heures: ['09:00', '10:30', '14:00', '15:30'],  // tous les créneaux de la journée
+  heures: ['08:00', '09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00'],
 
   // Les créneaux DÉJÀ PRIS, écrits "jour:heure" — les indices commencent à 0.
   // « 0:1 » = premier jour proposé, deuxième créneau. Ceux-là sont grisés.
-  pris: ['0:1', '0:3', '1:0', '1:2', '2:1', '3:0', '3:3', '4:2'],
+  pris: [
+    // 08    09    10    11    14    15    16    17
+    '0:0', '0:4',                    // jour 1
+    '1:2',                           // jour 2
+    '2:5',                           // jour 3
+    '3:1',                           // jour 4
+    '4:7'                            // jour 5
+  ],
 
   // Où part la fiche. Le webhook n8n renvoie une confirmation au prospect
   // ET prévient par email ; formsubmit double la notification.
